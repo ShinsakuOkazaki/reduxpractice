@@ -1,9 +1,11 @@
-import { ADD_ARTICLE, FOUND_BAD_WORD, DATA_LOADED } from "../constants/action-types";
+import { ADD_ARTICLE, FOUND_BAD_WORD, DATA_LOADED, INPUT_FILE, EDIT_CELL } from "../constants/action-types";
+
 
 const initialState = {
- 	articles: [],
- 	remoteArticles: []
+ 	columns: [],
+	rows: []
 };
+
 function rootReducer(state = initialState, action) {
 	if (action.type === ADD_ARTICLE) {
 		return Object.assign({}, state, {
@@ -18,6 +20,20 @@ function rootReducer(state = initialState, action) {
 			remoteArticles: state.remoteArticles.concat(action.payload)
 		});
 	}
+	if (action.type === INPUT_FILE) {
+		return Object.assign({}, state, {
+			columns : state.columns.concat(action.payload.columns),
+			rows: state.rows.concat(action.payload.rows)
+		});
+	}
+	
+	if (action.type === EDIT_CELL) {
+		return Object.assign({}, state, {
+			columns: state.columns,
+			rows: action.payload
+		})
+	}
+	
   	return state;
 };
 export default rootReducer;

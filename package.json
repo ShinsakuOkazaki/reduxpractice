@@ -4,13 +4,18 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "react-table": "^6.9.2"
+    "namor": "^1.1.2",
+    "papaparse": "^4.6.3",
+    "react-redux-grid": "^5.7.0",
+    "react-table": "^6.9.2",
+    "xlsx": "^0.14.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@babel/preset-env": "^7.4.1",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "prop-types": "^15.7.2",
@@ -20,6 +25,7 @@
     "redux": "^4.0.1",
     "redux-saga": "^1.0.2",
     "redux-thunk": "^2.3.0",
+    "style-loader": "^0.23.1",
     "uuid": "^3.3.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
