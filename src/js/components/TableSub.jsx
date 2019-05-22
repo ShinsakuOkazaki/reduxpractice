@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import { editCell } from "../actions/index";
+
+
   
 
 class Table extends React.Component {
@@ -13,6 +15,7 @@ class Table extends React.Component {
       
       renderEditable(cellInfo) {
         const {columns, rows }= this.props;
+        //onvert an array of array to array of object
         const newRows = rows.map(
           function(arr){
             const ob = {}
@@ -20,9 +23,7 @@ class Table extends React.Component {
             return ob
           }
         )
-
         return (
-          
           <div
             style={{ backgroundColor: "#fafafa" }}
             contentEditable ={true}
@@ -48,7 +49,7 @@ class Table extends React.Component {
       render() {
         const { columns, rows } = this.props;
         const renderEditable = this.renderEditable;
-
+        //convert an array of array to array of object
         const newRows = rows.map(
             function(arr){
               const ob = {}
@@ -56,12 +57,13 @@ class Table extends React.Component {
               return ob
             }
           )
-        
+        //convert an array of string to array of object
         const newColumns = columns.map(
           function(c){
             return { Header: c,
                     accessor: c.toLowerCase(),
-                    Cell: renderEditable 
+                    Cell: renderEditable,
+                    width: c.length * 10, 
                   }
           }
           )
@@ -71,7 +73,8 @@ class Table extends React.Component {
             <ReactTable
               data={newRows}
               columns={newColumns}
-              defaultPageSize={10}
+              showPagination = {true}
+              pageSize={20}
               className="-striped -highlight"
             />
           </div>
