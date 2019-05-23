@@ -11,6 +11,7 @@ class Table extends React.Component {
     constructor(props) {
         super(props);
         this.renderEditable = this.renderEditable.bind(this);
+        this.matchingHeader = this.matchingHeader.bind(this);
       }
       
       renderEditable(cellInfo) {
@@ -45,10 +46,42 @@ class Table extends React.Component {
           />
         );
       }
+
+
+      matchingHeader(c) {
+        const preHeader = ["Subject", "VisitLabel", "VisitDate",
+                           "CLINICAL_SYSTOLIC_BLOOD_PRESSURE", 
+                           //"CLINICAL_DIASTOLIC_BLOOD_PRESSURE",
+                           "CLINICAL_AMBULATORY_SYSTOLIC_BLOOD_PRESSURE_24_HOURS",
+                           //"CLINICAL_AMBULATORY_DIASTOLIC_BLOOD_PRESSURE_24_HOURS",
+                           "CLINICAL_AMBULATORY_SYSTOLIC_BLOOD_PRESSURE_AWAKE",
+                           "CLINICAL_AMBULATORY_DIASTOLIC_BLOOD_PRESSURE_AWAKE",
+                          // "CLINICAL_AMBULATORY_SYSTOLIC_BLOOD_PRESSURE_ASLEEP",
+                           "CLINICAL_AMBULATORY_DIASTOLIC_BLOOD_PRESSURE_ASLEEP"]
+        
+        const matched = preHeader.includes(c);
+    
+        return (
+          <div className="panel panel-default">
+            <div className="panel-heading">
+              {matched ? (
+                <p className="panel-title text-success">{c}</p> 
+              ) : (
+                <p className="panel-title text-danger">None</p>
+              )}
+            </div>
+            <div className="panel-body">
+              {c}
+            </div> 
+          </div> 
+        );
+      }
+    
       
       render() {
         const { columns, rows } = this.props;
         const renderEditable = this.renderEditable;
+        const matchingHeader = this.matchingHeader;
         //convert an array of array to array of object
         const newRows = rows.map(
             function(arr){
@@ -60,7 +93,7 @@ class Table extends React.Component {
         //convert an array of string to array of object
         const newColumns = columns.map(
           function(c){
-            return { Header: c,
+            return { Header: matchingHeader(c),
                     accessor: c.toLowerCase(),
                     Cell: renderEditable,
                     width: c.length * 10, 
