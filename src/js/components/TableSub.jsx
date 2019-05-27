@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import { editCell } from "../actions/index";
+import Pagination from "./Pagination.jsx";
+import Header from "./Header.jsx";
 
-
-  
 
 class Table extends React.Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class Table extends React.Component {
       
       renderEditable(cellInfo) {
         const {columns, rows }= this.props;
-        //onvert an array of array to array of object
+        //convert an array of array to array of object
         const newRows = rows.map(
           function(arr){
             const ob = {}
@@ -48,7 +48,7 @@ class Table extends React.Component {
       }
 
 
-      matchingHeader(c) {
+      matchingHeader(key, id) {
         const preHeader = ["Subject", "VisitLabel", "VisitDate",
                            "CLINICAL_SYSTOLIC_BLOOD_PRESSURE", 
                            //"CLINICAL_DIASTOLIC_BLOOD_PRESSURE",
@@ -59,19 +59,19 @@ class Table extends React.Component {
                           // "CLINICAL_AMBULATORY_SYSTOLIC_BLOOD_PRESSURE_ASLEEP",
                            "CLINICAL_AMBULATORY_DIASTOLIC_BLOOD_PRESSURE_ASLEEP"]
         
-        const matched = preHeader.includes(c);
-    
+           
+        const matched = preHeader.includes(key);
         return (
           <div className="panel panel-default">
             <div className="panel-heading">
               {matched ? (
-                <p className="panel-title text-success">{c}</p> 
+                <p className="panel-title text-success">{key}</p> 
               ) : (
                 <p className="panel-title text-danger">None</p>
               )}
             </div>
             <div className="panel-body">
-              {c}
+                <Header key={key} id={id}/>
             </div> 
           </div> 
         );
@@ -92,11 +92,11 @@ class Table extends React.Component {
           )
         //convert an array of string to array of object
         const newColumns = columns.map(
-          function(c){
-            return { Header: matchingHeader(c),
-                    accessor: c.toLowerCase(),
+          function(key, id){
+            return {Header: matchingHeader(key, id),
+                    accessor: key.toLowerCase(),
                     Cell: renderEditable,
-                    width: c.length * 10, 
+                    width: 300, 
                   }
           }
           )
@@ -106,8 +106,9 @@ class Table extends React.Component {
             <ReactTable
               data={newRows}
               columns={newColumns}
-              showPagination = {true}
-              pageSize={20}
+              PaginationComponent={Pagination}
+              //showPagination = {true}
+              //pageSize={20}
               className="-striped -highlight"
             />
           </div>
