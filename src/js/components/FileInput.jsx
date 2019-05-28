@@ -19,10 +19,17 @@ class FileInput extends React.Component {
             const wb = XLSX.read(e.target.result, { type: rABS ? "binary" : "array"});
             const wsname = wb.SheetNames[0];
             const ws = wb.Sheets[wsname];
-            const data = XLSX.utils.sheet_to_json(ws, { header: 1});
-            const columns = data[0];
-            const rows = data.slice(1);
-            this.props.inputFile({columns: columns, rows: rows});
+            const json = XLSX.utils.sheet_to_json(ws, { header: 1});
+            const columns = json[0];
+            const data = json.slice(1);
+            const propData = data.map(
+                function(arr){
+                  const ob = {}
+                  columns.forEach((key, i) => ob[key.toLowerCase()] = arr[i]);
+                  return ob
+                }
+              )
+            this.props.inputFile({columns: columns, data: propData});
         };
         if (rABS) reader.readAsBinaryString(file);
         else reader.readAsArrayBuffer(file);

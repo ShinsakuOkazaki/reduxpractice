@@ -15,33 +15,20 @@ class Table extends React.Component {
       }
       
       renderEditable(cellInfo) {
-        const {columns, rows }= this.props;
+        const { data }= this.props;
         //convert an array of array to array of object
-        const newRows = rows.map(
-          function(arr){
-            const ob = {}
-            columns.forEach((key, i) => ob[key.toLowerCase()] = arr[i]);
-            return ob
-          }
-        )
+        
         return (
           <div
             style={{ backgroundColor: "#fafafa" }}
             contentEditable ={true}
             suppressContentEditableWarning ={true}
             onBlur={e => {
-              newRows[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
-              const changedRows = newRows.map(
-                function(ob) {
-                  const arr=[];
-                  columns.forEach((key, i) =>arr[i] = ob[key.toLowerCase()]);
-                  return arr
-                }
-              )
-              this.props.editCell(changedRows);
+              data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
+              this.props.editCell(data);
             }}
             dangerouslySetInnerHTML={{
-              __html: newRows[cellInfo.index][cellInfo.column.id]
+              __html: data[cellInfo.index][cellInfo.column.id]
             }}
           />
         );
@@ -79,17 +66,10 @@ class Table extends React.Component {
     
       
       render() {
-        const { columns, rows } = this.props;
+        const { columns, data } = this.props;
         const renderEditable = this.renderEditable;
         const matchingHeader = this.matchingHeader;
-        //convert an array of array to array of object
-        const newRows = rows.map(
-            function(arr){
-              const ob = {}
-              columns.forEach((key, i) => ob[key.toLowerCase()] = arr[i]);
-              return ob
-            }
-          )
+        
         //convert an array of string to array of object
         const newColumns = columns.map(
           function(key, id){
@@ -104,7 +84,7 @@ class Table extends React.Component {
         return (
           <div>
             <ReactTable
-              data={newRows}
+              data={data}
               columns={newColumns}
               PaginationComponent={Pagination}
               //showPagination = {true}
@@ -119,13 +99,13 @@ class Table extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return { 
-    editCell: rows => dispatch(editCell(rows)) 
+    editCell: data => dispatch(editCell(data)) 
   }
 }
 
 
 const mapStateToProps = state => {
-  return {columns: state.columns, rows: state.rows};
+  return {columns: state.columns, data: state.data};
 };
 
 const TableSub = connect(mapStateToProps, mapDispatchToProps)(Table);

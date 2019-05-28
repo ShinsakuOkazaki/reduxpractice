@@ -35,7 +35,7 @@ class EditableHeader extends React.Component {
   }
 
   const mapStateToProps = state => {
-    return {columns: state.columns, rows: state.rows};
+    return {columns: state.columns, data: state.data};
   };
 
 const Header = connect(mapStateToProps, mapDispatchToProps)(EditableHeader);
