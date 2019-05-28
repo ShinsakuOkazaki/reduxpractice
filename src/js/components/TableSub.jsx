@@ -97,12 +97,13 @@ class Table extends React.Component {
     
 }
 
+
+
 const mapDispatchToProps = dispatch => {
   return { 
     editCell: data => dispatch(editCell(data)) 
   }
 }
-
 
 const mapStateToProps = state => {
   return {columns: state.columns, data: state.data};

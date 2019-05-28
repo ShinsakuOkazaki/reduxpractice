@@ -8,7 +8,7 @@ class EditableHeader extends React.Component {
   
     }
     render () {
-      const {columns} = this.props;
+      const {columns, data} = this.props;
       const {id} = this.props
       return (
         <div
