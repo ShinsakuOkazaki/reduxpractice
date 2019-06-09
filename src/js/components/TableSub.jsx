@@ -5,6 +5,7 @@ import "react-table/react-table.css";
 import { editCell } from "../actions/index";
 import Pagination from "./Pagination.jsx";
 import Header from "./Header.jsx";
+import { getData } from "../actions/index";
 
 
 class Table extends React.Component {
@@ -30,6 +31,10 @@ class Table extends React.Component {
           />
         );
       }
+
+      componentDidMount() {
+        this.props.getData();
+      }
       
       render() {
         const { columns, data } = this.props;
@@ -39,7 +44,21 @@ class Table extends React.Component {
                       <div>
                         <Header headerKey={column} headerId={id}/>
                       </div>
-                      ,
+                    ,
+                    // getHeaderProps:(state, rowInfo, column) => {
+                    //   return {
+                    //     onClick: (e, handleOriginal) => {
+                    //       console.log('it produced this event:', e)
+                    //       console.log("this state is:", state)        
+                    //       console.log("this rowInfo is:", rowInfo)        
+                    //       console.log("this column is",column)
+                    //       console.log("id is:", id)
+                    //       if (handleOriginal) {
+                    //         handleOriginal()
+                    //       }     
+                    //     }
+                    //   }
+                    // },
                     accessor: column.toLowerCase(),
                     filterable: false,
                     sortable: false,
@@ -69,7 +88,8 @@ class Table extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return { 
-    editCell: data => dispatch(editCell(data)) 
+    editCell: data => dispatch(editCell(data)),
+    getData: data => dispatch(getData(data))
   }
 }
 

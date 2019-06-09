@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import XLSX from 'xlsx';
 import { inputFile } from '../actions/index'
-
-
 class FileInput extends React.Component {
     constructor(props){
         super(props);
@@ -59,6 +57,7 @@ const mapDispatchToProps = dispatch => {
         inputFile: file => dispatch(inputFile(file))
     }
 }
+
 
 
 export default connect(
