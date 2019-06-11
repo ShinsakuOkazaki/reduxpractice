@@ -37,28 +37,15 @@ class Table extends React.Component {
       }
       
       render() {
-        const { columns, data } = this.props;
+        const { columns, data, match} = this.props;
         const renderEditable = this.renderEditable;
         const newColumns = columns.map((column, id) => {
+          const matched = match.includes(column) ? "h-match" : "h-unmatch" ; 
           return { Header: () => 
-                      <div>
+                      <div className={matched} >
                         <Header headerKey={column} headerId={id}/>
                       </div>
                     ,
-                    // getHeaderProps:(state, rowInfo, column) => {
-                    //   return {
-                    //     onClick: (e, handleOriginal) => {
-                    //       console.log('it produced this event:', e)
-                    //       console.log("this state is:", state)        
-                    //       console.log("this rowInfo is:", rowInfo)        
-                    //       console.log("this column is",column)
-                    //       console.log("id is:", id)
-                    //       if (handleOriginal) {
-                    //         handleOriginal()
-                    //       }     
-                    //     }
-                    //   }
-                    // },
                     accessor: column.toLowerCase(),
                     filterable: false,
                     sortable: false,
@@ -77,6 +64,14 @@ class Table extends React.Component {
               //showPagination = {true}
               //pageSize={20}
               className="-striped -highlight"
+              getProps = {() => {
+                return {
+                  style: {
+                    'borderCollapse': 'separate',
+                    'borderSpacing': '15px'
+                  }
+                }
+              }}
             />
           </div>
         );
@@ -94,7 +89,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  return {columns: state.columns, data: state.data};
+  return {columns: state.columns, data: state.data, match: state.match};
 };
 
 const TableSub = connect(mapStateToProps, mapDispatchToProps)(Table);

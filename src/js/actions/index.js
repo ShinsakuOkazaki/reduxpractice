@@ -13,7 +13,6 @@ export function editHeader(payload) {
   return { type: EDIT_HEADER, payload }
 }
 
-
 export function getData() {
   return function(dispatch) {
     return fetch("https://jsonplaceholder.typicode.com/posts")

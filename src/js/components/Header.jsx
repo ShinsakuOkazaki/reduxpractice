@@ -9,26 +9,17 @@ import Match from "./Match.jsx"
 class EditableHeader extends React.Component {
     constructor(props){
       super(props);
-      this.state = {
-        matched: true
-      };
-      this.refreshMatch = this.refreshMatch.bind(this)
     }
-
-    refreshMatch = () =>
-      this.setState({matched: !this.state.matched})
 
     render() {
       const {columns,headerKey,headerId} = this.props;
-      
       return (
-        <div className="panel panel-default">
-           <div className="panel-heading">
-              <Match headerKey={headerKey} headerId={headerId} refresh={this.state.refreshMatch}/>
+        <div>
+            <div>
+              < Match headerKey={headerKey} headerId={headerId} />
             </div>
-            <div className="panel-body" data-tip data-for={headerId.toString()}>
+            <div data-tip data-for={headerId.toString()}>
               <div
-                style={{ backgroundColor: "#fafafa" }}
                 contentEditable ={true}
                 suppressContentEditableWarning ={true}
                 onBlur={e => {
@@ -49,12 +40,12 @@ class EditableHeader extends React.Component {
 
   const mapDispatchToProps = dispatch => {
     return { 
-      editHeader: columns => dispatch(editHeader(columns)) 
+      editHeader: columns => dispatch(editHeader(columns))
     }
   }
 
 const mapStateToProps = state => {
-  return {columns: state.columns, data: state.data};
+  return {columns: state.columns};
 };
 
 const Header = connect(mapStateToProps, mapDispatchToProps)(EditableHeader);

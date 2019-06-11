@@ -1,0 +1,38 @@
+
+
+.ReactTable .rt-table {
+    border-collapse: separate;
+    border-spacing: 100px;
+}
+
+.panel-body {
+    color: black;
+        &:hover {
+        color: #0090B2;
+        }
+}
+
+.rt-td {
+    color: black;
+        &:hover {
+        color: #0090B2;
+        }
+}
+
+.h-match {
+    background: #b4ffc8
+}
+
+.h-unmatch {
+    background: red;
+}
+
+span .arrow{
+    height: 10;
+}
+
+.header-c {
+    background:  #b4ffc8;
+}
+
+ 
