@@ -13,12 +13,13 @@ class MatchHeader extends React.Component {
                 <div>
                     {matched ? (
                         <div>
-                            <p>{columns[headerId]}</p> 
-                            <span classNmae='arrow'>&#8595;</span>
+                            <p className="match-flag">{columns[headerId]}</p> 
+                            <span className='arrow'>&#8595;</span>
                         </div>
                     ) : (
                         <div>
-                            <p>None</p>
+                            <p className="match-flag">None</p>
+                            <br/>
                         </div>
                     )}
                 </div>

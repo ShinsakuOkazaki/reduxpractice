@@ -53,7 +53,7 @@ function rootReducer(state = initialState, action) {
 			columns: state.columns,
 			data : state.data,
 			old_columns: state.old_columns,
-			key_col: state.key_col.concat(action.payload),
+			key_col: state.key_col,
 			match: action.payload
 		})
 	}

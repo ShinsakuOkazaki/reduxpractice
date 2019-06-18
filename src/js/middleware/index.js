@@ -18,7 +18,7 @@ export function checkMatchMiddleware({ dispatch }) {
   return function(next){
     return function(action){
       if (action.type === EDIT_HEADER) {
-        const match = action.payload.filter(key => 
+        const match = action.payload.columns.filter(key => 
           matchList.includes(key)
         );
         return dispatch( {type: MATCHED, payload: match})

@@ -24,7 +24,7 @@ class EditableHeader extends React.Component {
                 suppressContentEditableWarning ={true}
                 onBlur={e => {
                   columns[headerId] = e.target.innerHTML;
-                  this.props.editHeader(columns);
+                  this.props.editHeader({columns});
                 }}
                 dangerouslySetInnerHTML={{
                   __html: columns[headerId]

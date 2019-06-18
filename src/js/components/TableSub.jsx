@@ -8,6 +8,7 @@ import Header from "./Header.jsx";
 import { getData } from "../actions/index";
 
 
+
 class Table extends React.Component {
     constructor(props) {
         super(props);
@@ -50,7 +51,7 @@ class Table extends React.Component {
                     filterable: false,
                     sortable: false,
                     Cell: renderEditable,
-                    width: 100
+                    width: 150
                   }
                 }
               )
