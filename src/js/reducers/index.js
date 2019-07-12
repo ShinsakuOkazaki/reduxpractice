@@ -1,4 +1,4 @@
-import { INPUT_FILE, EDIT_CELL, EDIT_HEADER, DATA_LOADED, MATCHED } from "../constants/action-types";
+import { INPUT_FILE, EDIT_CELL, EDIT_HEADER, DATA_LOADED, MATCHED, LOAD_STARTED} from "../constants/action-types";
 
 
 const initialState = {
@@ -6,7 +6,8 @@ const initialState = {
 	data: [],
 	old_columns: [],
 	key_col: [],
-	match: []
+	match: [],
+	loading: false
 };
 
 function rootReducer(state = initialState, action) {
@@ -15,46 +16,34 @@ function rootReducer(state = initialState, action) {
 		return Object.assign({}, state, {
 			columns : state.columns.concat(action.payload.columns),
 			data: state.data.concat(action.payload.data),
-			old_columns: state.old_columns.concat(action.payload.old_columns),
-			key_col: state.key_col,
-			match: state.match
+			old_columns: state.old_columns.concat(action.payload.old_columns)
 		});
 	}
 	
 	if (action.type === EDIT_CELL) {
 		return Object.assign({}, state, {
-			columns: state.columns,
-			data: action.payload,
-			old_columns: state.old_columns,
-			key_col: state.key_col,
-			match: state.match
+			data: action.payload
 		})
 	}
 	if (action.type === EDIT_HEADER) {
 		return Object.assign({}, state, {
-			columns: action.payload,
-			data : state.data,
-			old_columns: state.old_columns,
-			key_col: state.key_col,
-			match: state.match
+			columns: action.payload
 		})
 	}
 	if (action.type == DATA_LOADED) {
 		return Object.assign({}, state, {
-			columns: state.columns,
-			data : state.data,
-			old_columns: state.old_columns,
 			key_col: state.key_col.concat(action.payload),
-			match: state.match
+			loading: !state.loading
 		})
 	}
 	if (action.type == MATCHED) {
 		return Object.assign({}, state, {
-			columns: state.columns,
-			data : state.data,
-			old_columns: state.old_columns,
-			key_col: state.key_col,
 			match: action.payload
+		})
+	}
+	if(action.type == LOAD_STARTED) {
+		return Object.assign({}, state, {
+			loading: !state.loading
 		})
 	}
   	return state;
