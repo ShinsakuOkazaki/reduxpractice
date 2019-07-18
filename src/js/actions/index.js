@@ -24,10 +24,12 @@ export function dataLoaded(payload) {
 export function getData() {
   return function(dispatch) {
     dispatch(loadStarted())
-    return fetch("https://jsonplaceholder.typicode.com/posts")
+    return fetch("https://virtserver.swaggerhub.com/gregblt/SPINE_clinical_variable/1.0.0/clinical-variable")
     .then(response => response.json())
     .then(json => {
       dispatch(dataLoaded(json));
     });
   }
 }
+
+// "https://jsonplaceholder.typicode.com/posts"

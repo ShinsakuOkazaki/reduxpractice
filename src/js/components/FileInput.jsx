@@ -17,13 +17,13 @@ class FileInput extends React.Component {
             const wb = XLSX.read(e.target.result, { type: rABS ? "binary" : "array"});
             const wsname = wb.SheetNames[0];
             const ws = wb.Sheets[wsname];
-            const json = XLSX.utils.sheet_to_json(ws, { header: 1});
+            const json = XLSX.utils.sheet_to_json(ws, { header: 1, defval: ""});
             const columns = json[0];
             const data = json.slice(1);
             const propData = data.map(
                 function(arr){
                   const ob = {}
-                  columns.forEach((key, i) => ob[key.toLowerCase()] = arr[i]);
+                  columns.forEach((key, i) => ob[key] = arr[i]);
                   return ob
                 }
               )
