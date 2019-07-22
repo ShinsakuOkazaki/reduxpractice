@@ -63,7 +63,7 @@ class Table extends React.Component {
               columns={newColumns}
               PaginationComponent={Pagination}
               //showPagination = {true}
-              //pageSize={20}
+              pageSize={5}
               className="-striped -highlight"
               getProps = {() => {
                 return {
