@@ -41,12 +41,12 @@ class EditableHeader extends React.Component {
   const mapDispatchToProps = dispatch => {
     return { 
       editHeader: columns => dispatch(editHeader(columns))
-    }
+    };
   }
 
 const mapStateToProps = state => {
   return {columns: state.columns};
-};
+}
 
 const Header = connect(mapStateToProps, mapDispatchToProps)(EditableHeader);
 export default  Header;

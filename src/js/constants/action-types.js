@@ -4,3 +4,6 @@ export const EDIT_HEADER = "EDIT_HEADER";
 export const DATA_LOADED = "DATA_LOADED";
 export const MATCHED = "MATCHED";
 export const LOAD_STARTED = "LOAD_STARTED";
+export const SLIDE_INDEX = "SLIDE_INDEX";
+export const COLUMN_MATCHING = "COLUMN_MATCHING";
+export const UPDATE_CURRENT = "UPDATE_CURRENT";

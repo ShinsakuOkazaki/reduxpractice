@@ -1,4 +1,4 @@
-import {  MATCHED, EDIT_HEADER, INPUT_FILE } from "../constants/action-types";
+import {  MATCHED, EDIT_HEADER, COLUMN_MATCHING} from "../constants/action-types";
 
 const matchList = [
                     "Subject", "VisitLabel", "VisitDate",

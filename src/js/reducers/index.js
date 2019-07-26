@@ -1,10 +1,59 @@
-import { INPUT_FILE, EDIT_CELL, EDIT_HEADER, DATA_LOADED, MATCHED, LOAD_STARTED} from "../constants/action-types";
+import { INPUT_FILE,
+		 EDIT_CELL,
+		 EDIT_HEADER,
+		 DATA_LOADED,
+		 MATCHED,
+		 LOAD_STARTED,
+		 SLIDE_INDEX,
+		 COLUMN_MATCHING,
+		 UPDATE_CURRENT
+		} from "../constants/action-types";
 
 
 const initialState = {
  	columns: [],
 	data: [],
-	old_columns: [],
+	current: 0,
+	spine_variable: [
+		{
+			column_name: "Subject_ID", 
+			description:"This variable represents subjects",
+			variable_type: "number",
+			statistical_type: "discrete",
+			sop: "brabra",
+			multiple: [],
+			visit_time: [],
+			location: [] 
+		},
+		{
+			column_name: "Opening_Date", 
+			description:"This variable represents subjects",
+			variable_type: "number",
+			statistical_type: "continuos",
+			sop: "brabra",
+			multiple: [],
+			visit_time: [],
+			location: [] 
+		}
+	],
+	variable_types: [
+			{label: "Number", value: "number"},
+			{label: "Multiple Choice", value: "multiple"},
+			{label: "Date", value: "date"},
+			{label: "Text", value: "text"}
+		], 
+	current_variable: {
+		column_name: "", 
+		description: "",
+		variable_type: "",
+		statistical_type: "",
+		sop: "",
+		multiple: [],
+		visit_time: [],
+		location: [] 
+		}, 
+	submit_variable: [],
+	matching: false, 
 	key_col: [],
 	match: [],
 	loading: false
@@ -15,8 +64,7 @@ function rootReducer(state = initialState, action) {
 	if (action.type === INPUT_FILE) {
 		return Object.assign({}, state, {
 			columns : state.columns.concat(action.payload.columns),
-			data: state.data.concat(action.payload.data),
-			old_columns: state.old_columns.concat(action.payload.old_columns)
+			data: state.data.concat(action.payload.data)
 		});
 	}
 	
@@ -46,6 +94,22 @@ function rootReducer(state = initialState, action) {
 			loading: !state.loading
 		})
 	}
+	if(action.type == SLIDE_INDEX) {
+		return Object.assign({}, state, {
+			current: action.payload
+		})
+	}
+	if(action.type == COLUMN_MATCHING) {
+		return Object.assign({}, state, {
+			matching: action.payload
+		})
+	}
+	if(action.type == UPDATE_CURRENT) {
+		return Object.assign({}, state, {
+			current_variable: action.payload
+		})
+	}
+	
   	return state;
 };
 export default rootReducer;

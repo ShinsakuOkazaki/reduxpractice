@@ -1,4 +1,12 @@
-import { INPUT_FILE , EDIT_CELL, EDIT_HEADER, DATA_LOADED,  LOAD_STARTED} from "../constants/action-types";
+import { INPUT_FILE,
+         EDIT_CELL, 
+         EDIT_HEADER, 
+         DATA_LOADED,  
+         LOAD_STARTED, 
+         SLIDE_INDEX, 
+         COLUMN_MATCHING,
+         UPDATE_CURRENT
+        } from "../constants/action-types";
 
 
 export function inputFile(payload) {
@@ -19,6 +27,18 @@ export function loadStarted() {
 
 export function dataLoaded(payload) {
   return { type: DATA_LOADED, payload }
+}
+
+export function slideIndex(payload) {
+  return { type: SLIDE_INDEX, payload }
+}
+
+export function columnMatching(payload) {
+  return { type: COLUMN_MATCHING, payload }
+}
+
+export function updateCurrent(payload) {
+  return { type: UPDATE_CURRENT, payload }
 }
 
 export function getData() {

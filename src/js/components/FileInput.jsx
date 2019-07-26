@@ -27,7 +27,7 @@ class FileInput extends React.Component {
                   return ob
                 }
               )
-            this.props.inputFile({columns: columns, data: propData, old_columns: columns});
+            this.props.inputFile({columns: columns, data: propData});
         };
         if (rABS) reader.readAsBinaryString(file);
         else reader.readAsArrayBuffer(file);
