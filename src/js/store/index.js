@@ -10,8 +10,8 @@ const storeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   rootReducer,
-  storeEnhancers(
-    applyMiddleware(checkMatchMiddleware, thunk)
+   storeEnhancers(
+     applyMiddleware(checkMatchMiddleware, thunk)
   )
 );
 //initialiseSagaMiddleware.run(apiSaga);

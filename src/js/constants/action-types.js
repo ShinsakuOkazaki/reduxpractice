@@ -7,3 +7,6 @@ export const LOAD_STARTED = "LOAD_STARTED";
 export const SLIDE_INDEX = "SLIDE_INDEX";
 export const COLUMN_MATCHING = "COLUMN_MATCHING";
 export const UPDATE_CURRENT = "UPDATE_CURRENT";
+export const STORE_SUBMIT = "STORE_SUBMIT";
+export const EDIT_DATATYPE = "EDIT_DATATYPE";
+export const EDIT_NAME = "EDIT_NAME";

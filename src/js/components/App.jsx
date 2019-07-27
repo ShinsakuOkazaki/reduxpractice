@@ -12,23 +12,23 @@ import 'primeicons/primeicons.css';
 
 const App = () => (
   <div className="row mt-5">
-    <div>
+    {/* <div>
       <KeyUpload />
-    </div>
+    </div> */}
     <div>
       <FileInput/>
     </div>
     <div>
-      <TypeDropdown/>
+      <TableSub />
     </div>
     <div>
       <InputName/>
     </div>
     <div>
-      <VerifyButton />
+      <TypeDropdown/>
     </div>
     <div>
-      <TableSub />
+      <VerifyButton />
     </div>
   </div>
 );

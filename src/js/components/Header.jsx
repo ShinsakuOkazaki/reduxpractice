@@ -23,12 +23,12 @@ class EditableHeader extends React.Component {
                 contentEditable ={true}
                 suppressContentEditableWarning ={true}
                 onBlur={e => {
-                  columns[headerId] = e.target.innerHTML;
-                  this.props.editHeader({columns});
+                  // columns[headerId] = e.target.innerHTML;
+                  this.props.editHeader({column: e.target.innerHTML});
                 }}
                 dangerouslySetInnerHTML={{
                   __html: columns[headerId]
-                }}
+                }}  
               />
             </div> 
             <ReactTooltip id={headerId.toString()} getContent={() => <span>{columns[headerId]}</span>}/>   
@@ -40,7 +40,7 @@ class EditableHeader extends React.Component {
 
   const mapDispatchToProps = dispatch => {
     return { 
-      editHeader: columns => dispatch(editHeader(columns))
+      editHeader: column => dispatch(editHeader(column))
     };
   }
 

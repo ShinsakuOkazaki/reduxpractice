@@ -1,4 +1,8 @@
-import {  MATCHED, EDIT_HEADER, COLUMN_MATCHING} from "../constants/action-types";
+import { MATCHED,
+         EDIT_HEADER, 
+         COLUMN_MATCHING,
+         SLIDE_INDEX, 
+         STORE_SUBMIT} from "../constants/action-types";
 
 const matchList = [
                     "Subject", "VisitLabel", "VisitDate",
@@ -18,10 +22,7 @@ export function checkMatchMiddleware({ dispatch }) {
   return function(next){
     return function(action){
       if (action.type === EDIT_HEADER) {
-        const match = action.payload.columns.filter(key => 
-          matchList.includes(key)
-        );
-        return dispatch( {type: MATCHED, payload: match})
+        return dispatch( {type: COLUMN_MATCHING, payload: action.payload})
       }
       return next(action);
     }

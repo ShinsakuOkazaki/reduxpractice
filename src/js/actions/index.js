@@ -5,7 +5,10 @@ import { INPUT_FILE,
          LOAD_STARTED, 
          SLIDE_INDEX, 
          COLUMN_MATCHING,
-         UPDATE_CURRENT
+         UPDATE_CURRENT,
+         STORE_SUBMIT,
+         EDIT_DATATYPE,
+         EDIT_NAME
         } from "../constants/action-types";
 
 
@@ -39,6 +42,17 @@ export function columnMatching(payload) {
 
 export function updateCurrent(payload) {
   return { type: UPDATE_CURRENT, payload }
+}
+
+export function storeSubmit(payload) {
+  return { type: STORE_SUBMIT, payload }
+}
+export function editDatatype(payload) {
+  return { type: EDIT_DATATYPE, payload }
+}
+
+export function editName(payload) {
+  return { type: EDIT_NAME, payload }
 }
 
 export function getData() {

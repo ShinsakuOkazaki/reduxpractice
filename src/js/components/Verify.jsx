@@ -9,10 +9,11 @@ class DefaultButton extends React.Component {
         super(props);
     }
     render() {
+        const {current_idx} = this.props
         return (
             <Button label="Verify" onClick = { ()=>{
-                    const current = this.props.current + 1;
-                    this.props.slideIndex(current)
+                    const next_idx = current_idx + 1;
+                    this.props.slideIndex(next_idx);
                 }   
             } 
             />
@@ -25,12 +26,12 @@ class DefaultButton extends React.Component {
 
 const mapDispatchToProps = dispatch => {
     return { 
-      slideIndex: current => dispatch(slideIndex(current))
+      slideIndex: current_idx => dispatch(slideIndex(current_idx))
     };
 }
 
 const mapStateToProps = state => {
-    return {current: state.current};
+    return {current_idx: state.current_idx};
 }
 
 const VerifyButton = connect(mapStateToProps, mapDispatchToProps)(DefaultButton);
