@@ -10,3 +10,5 @@ export const UPDATE_CURRENT = "UPDATE_CURRENT";
 export const STORE_SUBMIT = "STORE_SUBMIT";
 export const EDIT_DATATYPE = "EDIT_DATATYPE";
 export const EDIT_NAME = "EDIT_NAME";
+export const GOTO_INDEX = "GOTO_INDEX";
+export const CHANGE_CHOICE = "CHANGE_CHOICE";

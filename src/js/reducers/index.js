@@ -9,7 +9,9 @@ import { INPUT_FILE,
 		 UPDATE_CURRENT,
 		 STORE_SUBMIT,
 		 EDIT_DATATYPE,
-		 EDIT_NAME
+		 EDIT_NAME,
+		 GOTO_INDEX,
+		 CHANGE_CHOICE
 		} from "../constants/action-types";
 
 
@@ -31,10 +33,10 @@ const initialState = {
 		{
 			column_name: "VisitLabel", 
 			description:"This variable represents subjects",
-			variable_type: "number",
+			variable_type: "multiple",
 			statistical_type: "continuos",
 			sop: "brabra",
-			multiple: [],
+			multiple: ["baseline", "2yr", "4yr", "extra", "extr2"],
 			visit_time: [],
 			location: [] 
 		}
@@ -80,11 +82,18 @@ function rootReducer(state = initialState, action) {
 		const spine_variables = state.spine_variables;
 		const spine_columns = spine_variables.map(x => x['column_name']);
 		let submit_variables = new Array(columns.length);
-		let i = 0;
-		for (i = 0; i < columns.length; i++) {
+		const unique = (value, index, self) => {
+			return self.indexOf(value) === index;
+		}
+		for (let i = 0; i < columns.length; i++) {
 			if (spine_columns.includes(columns[i])) {
 				let idx_variable = spine_columns.indexOf(columns[i]);
-				submit_variables[i] = spine_variables[idx_variable];
+				submit_variables[i] = Object.assign({}, spine_variables[idx_variable]);
+				if (submit_variables[i]["variable_type"] === "multiple"){
+					const values = data.map(x => x[columns[i]]);
+					const multiple = values.filter(unique);
+					submit_variables[i]["multiple"] = multiple
+				}
 			} else {
 				submit_variables[i] = {
 					column_name: columns[i], 
@@ -176,6 +185,21 @@ function rootReducer(state = initialState, action) {
 	if(action.type === STORE_SUBMIT) {
 		return Object.assign({}, state, {
 			submit_variables: action.payload
+		})
+	}
+	if(action.type === GOTO_INDEX) {
+		return Object.assign({}, state, {
+			current_idx: action.payload
+		})
+	}
+	if(action.type === CHANGE_CHOICE) {
+		const {current_idx, submit_variables} = state;
+		const {old_multiple, new_multiple} = action.payload;
+		const multiple = submit_variables[current_idx]["multiple"];
+		multiple[multiple.indexOf(old_multiple)] = new_multiple;
+		submit_variables[current_idx]["multiple"] = multiple;
+		return Object.assign({}, state, {
+			submit_variables: submit_variables
 		})
 	}
 

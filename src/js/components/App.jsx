@@ -8,27 +8,33 @@ import TypeDropdown from "./DataType.jsx";
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import Switching from "./Switching.jsx";
 
 
 const App = () => (
-  <div className="row mt-5">
+  <div className="row mt-3">
     {/* <div>
       <KeyUpload />
     </div> */}
     <div>
       <FileInput/>
     </div>
+    <div className="w3-cell-row ">
+      <div className="w3-container w3-cell">
+        <InputName/>
+      </div>
+      <div className="w3-container w3-cell">
+        <TypeDropdown/>
+      </div>
+      <div className="w3-container w3-cell">
+        <VerifyButton />
+      </div>
+    </div>
+    <div>
+      <Switching/>
+    </div>
     <div>
       <TableSub />
-    </div>
-    <div>
-      <InputName/>
-    </div>
-    <div>
-      <TypeDropdown/>
-    </div>
-    <div>
-      <VerifyButton />
     </div>
   </div>
 );

@@ -1,20 +1,7 @@
-
-body {
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
-      Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: 300;
-    font-size: 14px;
-  }
-
 .ReactTable {
     width: 100%;
     overflow: scroll;
 }
-
-// .rt-tbody,
-// .rt-thead {
-//   overflow-x: hidden !important;
-// }
 
 .panel-body {
     color: black;
@@ -54,4 +41,7 @@ span .arrow{
 .match-flag {
     margin: 0px;
 }
- 
+span.choice {
+    display: inline; 
+    padding: 5px;
+}

@@ -8,7 +8,9 @@ import { INPUT_FILE,
          UPDATE_CURRENT,
          STORE_SUBMIT,
          EDIT_DATATYPE,
-         EDIT_NAME
+         EDIT_NAME,
+         GOTO_INDEX,
+         CHANGE_CHOICE
         } from "../constants/action-types";
 
 
@@ -53,6 +55,12 @@ export function editDatatype(payload) {
 
 export function editName(payload) {
   return { type: EDIT_NAME, payload }
+}
+export function gotoIndex(payload) {
+  return { type: GOTO_INDEX, payload }
+}
+export function changeChoice(payload) {
+  return { type: changeChice, payload }
 }
 
 export function getData() {

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { editHeader } from "../actions/index";
+import { editHeader, gotoIndex } from "../actions/index";
 import ReactTooltip from 'react-tooltip'
 import Match from "./Match.jsx"
 
@@ -23,7 +23,8 @@ class EditableHeader extends React.Component {
                 contentEditable ={true}
                 suppressContentEditableWarning ={true}
                 onBlur={e => {
-                  // columns[headerId] = e.target.innerHTML;
+                  //columns[headerId] = e.target.innerHTML;
+                  this.props.gotoIndex(headerId);
                   this.props.editHeader({column: e.target.innerHTML});
                 }}
                 dangerouslySetInnerHTML={{
@@ -40,7 +41,8 @@ class EditableHeader extends React.Component {
 
   const mapDispatchToProps = dispatch => {
     return { 
-      editHeader: column => dispatch(editHeader(column))
+      editHeader: column => dispatch(editHeader(column)),
+      gotoIndex: idx => dispatch(gotoIndex(idx))
     };
   }
 
