@@ -41,9 +41,8 @@ class Table extends React.Component {
         const { columns, data, match} = this.props;
         const renderEditable = this.renderEditable;
         const newColumns = columns.map((column, id) => {
-          const matched = match.includes(column) ? "h-match" : "h-unmatch" ; 
           return { Header: () => 
-                      <div className={matched} >
+                      <div >
                         <Header headerKey={column} headerId={id}/>
                       </div>
                     ,

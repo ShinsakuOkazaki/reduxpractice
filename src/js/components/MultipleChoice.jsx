@@ -62,7 +62,7 @@ class DefualtChoice extends React.Component {
             }
         }
         return (
-            <div>{list}</div>
+            <div className="w3-card mutiple-panel">{list}</div>
         )
     }
 }
