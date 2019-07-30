@@ -11,7 +11,10 @@ import { INPUT_FILE,
 		 EDIT_DATATYPE,
 		 EDIT_NAME,
 		 GOTO_INDEX,
-		 CHANGE_CHOICE
+		 CHANGE_CHOICE,
+		 EDIT_STATTYPE,
+		 EDIT_DESCRIPTION,
+		 EDIT_SOP
 		} from "../constants/action-types";
 
 
@@ -42,21 +45,15 @@ const initialState = {
 		}
 	],
 	variable_types: [
-			{label: "Number", value: "number"},
-			{label: "Multiple Choice", value: "multiple"},
-			{label: "Date", value: "date"},
-			{label: "Text", value: "text"}
-		], 
-	// current_variable: {
-	// 	column_name: "", 
-	// 	description: "",
-	// 	variable_type: "",
-	// 	statistical_type: "",
-	// 	sop: "",
-	// 	multiple: [],
-	// 	visit_time: [],
-	// 	location: [] 
-	// 	}, 
+		{label: "Number", value: "number"},
+		{label: "Multiple Choice", value: "multiple"},
+		{label: "Date", value: "date"},
+		{label: "Text", value: "text"}
+	], 
+	statistical_types: [
+		{label: "Continuous", value: "continuous"},
+		{label: "Discrete", value: "discrete"}
+	],
 	submit_variables: [
 		{
 			column_name: "", 
@@ -108,8 +105,8 @@ function rootReducer(state = initialState, action) {
 			}
 		}
 		return Object.assign({}, state, {
-			columns : state.columns.concat(columns),
-			data: state.data.concat(data),
+			columns : columns,
+			data: data,
 			submit_variables: submit_variables
 		});
 	}
@@ -145,16 +142,6 @@ function rootReducer(state = initialState, action) {
 			loading: !state.loading
 		})
 	}
-	// if (action.type == MATCHED) {
-	// 	return Object.assign({}, state, {
-	// 		match: action.payload
-	// 	})
-	// }
-	// if(action.type == LOAD_STARTED) {
-	// 	return Object.assign({}, state, {
-	// 		loading: !state.loading
-	// 	})
-	// }
 	if(action.type === SLIDE_INDEX) {
 		return Object.assign({}, state, {
 			current_idx: action.payload
@@ -176,12 +163,30 @@ function rootReducer(state = initialState, action) {
 			submit_variables: submit_variables
 		})
 	}
-
-	// if(action.type === UPDATE_CURRENT) {
-	// 	return Object.assign({}, state, {
-	// 		current_variable: action.payload
-	// 	})
-	// }
+	if(action.type === EDIT_STATTYPE) {
+		const {statistical_type} = action.payload;
+		let {current_idx, submit_variables} = state;
+		submit_variables[current_idx]["statistical_type"] = statistical_type;
+		return Object.assign({}, state, {
+			submit_variables: submit_variables
+		})
+	}
+	if(action.type === EDIT_DESCRIPTION) {
+		const {description} = action.payload;
+		let {current_idx, submit_variables} = state;
+		submit_variables[current_idx]["description"] = description;
+		return Object.assign({}, state, {
+			submit_variables: submit_variables
+		})
+	}
+	if(action.type === EDIT_SOP) {
+		const {sop} = action.payload;
+		let {current_idx, submit_variables} = state;
+		submit_variables[current_idx]["sop"] = sop;
+		return Object.assign({}, state, {
+			submit_variables: submit_variables
+		})
+	}
 	if(action.type === STORE_SUBMIT) {
 		return Object.assign({}, state, {
 			submit_variables: action.payload
@@ -197,11 +202,13 @@ function rootReducer(state = initialState, action) {
 		const {old_multiple, new_multiple} = action.payload;
 		const multiple = submit_variables[current_idx]["multiple"];
 		multiple[multiple.indexOf(old_multiple)] = new_multiple;
+		console.log(multiple.indexOf(old_multiple))
 		submit_variables[current_idx]["multiple"] = multiple;
 		return Object.assign({}, state, {
 			submit_variables: submit_variables
 		})
 	}
+	
 
 	
   	return state;

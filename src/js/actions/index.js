@@ -10,7 +10,10 @@ import { INPUT_FILE,
          EDIT_DATATYPE,
          EDIT_NAME,
          GOTO_INDEX,
-         CHANGE_CHOICE
+         CHANGE_CHOICE,
+         EDIT_STATTYPE,
+         EDIT_DESCRIPTION,
+         EDIT_SOP
         } from "../constants/action-types";
 
 
@@ -60,7 +63,16 @@ export function gotoIndex(payload) {
   return { type: GOTO_INDEX, payload }
 }
 export function changeChoice(payload) {
-  return { type: changeChice, payload }
+  return { type: CHANGE_CHOICE, payload }
+}
+export function editStatType(payload) {
+  return { type: EDIT_STATTYPE, payload }
+}
+export function editDescription(payload) {
+  return { type: EDIT_DESCRIPTION, payload}
+}
+export function editSOP(payload) {
+  return { type: EDIT_SOP, payload}
 }
 
 export function getData() {

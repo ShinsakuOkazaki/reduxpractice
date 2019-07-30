@@ -33,9 +33,10 @@ class DefualtChoice extends React.Component {
                         <span className="choice"><i className="pi pi-arrow-right" style={{'fontsize': '3em'}}></i></span>
                         <span className="choice">
                             <input type="text"
+                                id = {i}
                                 data-old={matched_multiple[i]}  
                                 value={matched_multiple[i]} 
-                                onChange={(e) => this.props.changeChoice({old_multiple: e.getAttribute("data-old"),
+                                onChange={(e) => this.props.changeChoice({idx: document.getElementById(i).getAttribute("data-old"),
                                                                         new_multiple: e.target.value})}/>
                         </span>
                         
@@ -51,9 +52,10 @@ class DefualtChoice extends React.Component {
                         <span className="choice">{diff_spine[i - matched_multiple.length]}</span>
                         <span className="choice">
                             <input type="text"
+                                id = {i}
                                 data-old={diff_submit[i - matched_multiple.length ]}
                                 value={diff_submit[i - matched_multiple.length ]}
-                                onChange={(e) => this.props.changeChoice({old_multiple: e.getAttribute("data-old"),
+                                onChange={(e) => this.props.changeChoice({old_multiple: document.getElementById(i).getAttribute("data-old"),
                                                                         new_multiple: e.target.value})}/>
                         </span>
                         

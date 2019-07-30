@@ -30,7 +30,7 @@ class DefaultDropdown extends React.Component {
 const mapStateToProps = state => {
     return {
         current_variable_type: state.submit_variables[state.current_idx]['variable_type'],
-        variable_types: state.variable_types,
+        variable_types: state.variable_types
         //submit_variables: state.submit_variables,
     };
 }

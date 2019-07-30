@@ -9,29 +9,26 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import Switching from "./Switching.jsx";
-
+import Descriotion from "./Description.jsx";
+import SOP from "./SOP.jsx";
 
 const App = () => (
-  <div className="row mt-3">
+  <div>
     {/* <div>
       <KeyUpload />
     </div> */}
-    <div>
+    <div className="column">
       <FileInput/>
-    </div>
-    <div className="w3-cell-row ">
-      <div className="w3-container w3-cell">
-        <InputName/>
-      </div>
-      <div className="w3-container w3-cell">
-        <TypeDropdown/>
-      </div>
-      <div className="w3-container w3-cell">
-        <VerifyButton />
-      </div>
-    </div>
-    <div>
+      <InputName/>
+      <TypeDropdown/>
       <Switching/>
+    </div> 
+    <div className="column">
+      <Descriotion/>
+      <SOP/>
+    </div>
+    <div className="column">
+      <VerifyButton/>
     </div>
     <div>
       <TableSub />

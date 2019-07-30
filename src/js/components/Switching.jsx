@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import MultipleChoice from "./MultipleChoice.jsx";
+import StatUnit from "./StatUnit.jsx";
 
 class DefaultSwitching extends React.Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class DefaultSwitching extends React.Component {
         if (variable_type === "multiple") {
             return (<MultipleChoice/>)
         } else {
-            return (<p>Placeholder</p>)
+            return (<StatUnit/>)
         }
     }
 }
