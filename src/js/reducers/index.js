@@ -39,7 +39,7 @@ const initialState = {
 			variable_type: "multiple",
 			statistical_type: "continuos",
 			sop: "brabra",
-			multiple: ["baseline", "2yr", "4yr", "extra", "extr2"],
+			multiple: ["baseline", "2yr", "extra", "extr2"],
 			visit_time: [],
 			location: [] 
 		}
@@ -199,10 +199,11 @@ function rootReducer(state = initialState, action) {
 	}
 	if(action.type === CHANGE_CHOICE) {
 		const {current_idx, submit_variables} = state;
-		const {old_multiple, new_multiple} = action.payload;
+		const {idx, new_multiple} = action.payload;
 		const multiple = submit_variables[current_idx]["multiple"];
-		multiple[multiple.indexOf(old_multiple)] = new_multiple;
-		console.log(multiple.indexOf(old_multiple))
+		//multiple[multiple.indexOf(old_multiple)] = new_multiple;
+		//console.log(multiple.indexOf(old_multiple))
+		multiple[idx] = new_multiple;
 		submit_variables[current_idx]["multiple"] = multiple;
 		return Object.assign({}, state, {
 			submit_variables: submit_variables
