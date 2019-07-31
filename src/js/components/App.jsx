@@ -11,6 +11,8 @@ import 'primeicons/primeicons.css';
 import Switching from "./Switching.jsx";
 import Descriotion from "./Description.jsx";
 import SOP from "./SOP.jsx";
+import AssociatedVisit from "./AssociatedVisit.jsx";
+import AssociatedLocation from "./AssociatedLocation.jsx";
 
 const App = () => (
   <div>
@@ -18,17 +20,37 @@ const App = () => (
       <KeyUpload />
     </div> */}
     <div className="column">
-      <FileInput/>
-      <InputName/>
-      <TypeDropdown/>
-      <Switching/>
+      <div className="w3-margin">
+        <FileInput/>
+      </div>
+      <div className="w3-margin">
+        <InputName/>
+      </div>
+      <div className="w3-margin">
+        <TypeDropdown/>
+      </div>
+      <div className="w3-margin">
+        <Switching/>
+      </div>
     </div> 
     <div className="column">
-      <Descriotion/>
-      <SOP/>
+      <div className="w3-margin">
+        <Descriotion/>
+      </div>
+      <div className="w3-margin">
+        <SOP/>
+      </div>
     </div>
     <div className="column">
-      <VerifyButton/>
+      <div className="w3-margin">
+        <AssociatedVisit/>
+      </div>
+      <div className="w3-margin">  
+        <AssociatedLocation/>
+      </div>
+      <div className="w3-margin">  
+        <VerifyButton/>
+      </div>
     </div>
     <div>
       <TableSub />

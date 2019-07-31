@@ -14,7 +14,9 @@ import { INPUT_FILE,
 		 CHANGE_CHOICE,
 		 EDIT_STATTYPE,
 		 EDIT_DESCRIPTION,
-		 EDIT_SOP
+		 EDIT_SOP,
+		 ADD_VISIT,
+		 ADD_LOCATION
 		} from "../constants/action-types";
 
 
@@ -89,7 +91,8 @@ function rootReducer(state = initialState, action) {
 				if (submit_variables[i]["variable_type"] === "multiple"){
 					const values = data.map(x => x[columns[i]]);
 					const multiple = values.filter(unique);
-					submit_variables[i]["multiple"] = multiple
+					submit_variables[i]["multiple"] = multiple;
+				
 				}
 			} else {
 				submit_variables[i] = {
@@ -171,6 +174,22 @@ function rootReducer(state = initialState, action) {
 			submit_variables: submit_variables
 		})
 	}
+	if(action.type === ADD_VISIT) {
+		const {visit_time} = action.payload;
+		let {current_idx, submit_variables} = state;
+		submit_variables[current_idx]["visit_time"] = visit_time;
+		return Object.assign({}, state, {
+			submit_variables: submit_variables
+		})
+	}
+	if(action.type === ADD_LOCATION) {
+		const {location} = action.payload;
+		let {current_idx, submit_variables} = state;
+		submit_variables[current_idx]["location"] = location;
+		return Object.assign({}, state, {
+			submit_variables: submit_variables
+		})
+	}
 	if(action.type === EDIT_DESCRIPTION) {
 		const {description} = action.payload;
 		let {current_idx, submit_variables} = state;
@@ -199,12 +218,15 @@ function rootReducer(state = initialState, action) {
 	}
 	if(action.type === CHANGE_CHOICE) {
 		const {current_idx, submit_variables} = state;
-		const {idx, new_multiple} = action.payload;
-		const multiple = submit_variables[current_idx]["multiple"];
-		//multiple[multiple.indexOf(old_multiple)] = new_multiple;
-		//console.log(multiple.indexOf(old_multiple))
-		multiple[idx] = new_multiple;
-		submit_variables[current_idx]["multiple"] = multiple;
+		const {new_multiple} = action.payload;
+		console.log(new_multiple)
+		let multiple = []
+		for (let i = 0; i < new_multiple.length; i++) {
+			if (new_multiple[i] !== "") {
+				multiple.push(new_multiple[i])
+			}
+		}
+		submit_variables[current_idx]["multiple"] = multiple
 		return Object.assign({}, state, {
 			submit_variables: submit_variables
 		})

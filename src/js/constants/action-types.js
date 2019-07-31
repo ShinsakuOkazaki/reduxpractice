@@ -14,4 +14,6 @@ export const GOTO_INDEX = "GOTO_INDEX";
 export const CHANGE_CHOICE = "CHANGE_CHOICE";
 export const EDIT_STATTYPE = "EDIT_STATTYPE";
 export const EDIT_DESCRIPTION = "EDIT_DESCRIPTION"
-export const EDIT_SOP = "EDIT_SOP"
+export const EDIT_SOP = "EDIT_SOP";
+export const ADD_VISIT = "ADD_VISIT";
+export const ADD_LOCATION = "ADD_LOCATION";
