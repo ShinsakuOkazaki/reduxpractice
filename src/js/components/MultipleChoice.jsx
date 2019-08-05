@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 //import {changeChoice} from "../actions/index"
 import MatchedChoice from "./MatchedChoice.jsx";
-
+import {Card} from 'primereact/card';
 
 
 class DefualtChoice extends React.Component {
@@ -29,11 +29,12 @@ class DefualtChoice extends React.Component {
                 <MatchedChoice key={( temp_spine_multiple[i] !== "") ? temp_spine_multiple[i] : "extra"+i} 
                                 temp_submit_multiple={temp_submit_multiple}
                                 temp_spine_multiple={temp_spine_multiple}
-                                idx={i}/>
+                                idx={i}
+                />
             )
         }        
         return (
-            <div className="w3-card mutiple-panel">{listItems}</div>
+            <Card>{listItems}</Card>
         )
     }
 }

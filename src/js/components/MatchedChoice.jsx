@@ -3,29 +3,43 @@ import { connect } from "react-redux";
 import {changeChoice} from "../actions/index";
 import {InputText} from 'primereact/inputtext';
 
+
+
 class DefaultMatchedChoice extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {inputValue: ""}
         this.handleChange = this.handleChange.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
     }
     handleChange(event) {
+        this.setState({inputValue: event.target.value});
+    }
+    handleBlur() {
         const {temp_submit_multiple, idx} = this.props
-        temp_submit_multiple[idx] = event.target.value;
+        temp_submit_multiple[idx] = this.state.inputValue;
         this.props.changeChoice({new_multiple: temp_submit_multiple});
     }
+    componentDidMount() {
+        const {temp_submit_multiple, idx} = this.props
+        this.setState({inputValue: temp_submit_multiple[idx]});
+     }
     render() {
         const {temp_submit_multiple, temp_spine_multiple, idx} = this.props
         return (
-            <form>
-                <span className="choice">{temp_spine_multiple[idx]}</span>
-                <span className="choice"><i className="pi pi-arrow-right" style={{'fontsize': '3em'}}></i></span>
-                <span className="choice">
+            <form className="multi-form">
+                <div className="multi-spine">
+                    {temp_spine_multiple[idx]}
+                </div>
+                <div className="multi-arrow"><i className="pi pi-arrow-right" style={{'fontsize': '3em'}}></i></div>
+                <div className="multi-submit">
                     <InputText type="text"
                         id = {idx}  
-                        value={temp_submit_multiple[idx]} 
+                        value={this.state.inputValue} 
                         onChange={this.handleChange}
+                        onBlur={this.handleBlur}
                     />
-                </span>
+                </div>
             </form>
         )
     }

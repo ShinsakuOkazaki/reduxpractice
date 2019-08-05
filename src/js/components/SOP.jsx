@@ -11,7 +11,7 @@ class DefaultSOP extends React.Component{
     render() {
         const {sop} = this.props;
         return (
-            <InputTextarea rows={10} cols={60} value={sop} onChange={(e) => this.props.editDescription(e.target.value)} />
+            <InputTextarea rows={10} cols={50} value={sop} onChange={(e) => this.props.editSOP({sop: e.target.value})} />
         )
     }
 }

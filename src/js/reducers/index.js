@@ -192,6 +192,7 @@ function rootReducer(state = initialState, action) {
 	}
 	if(action.type === EDIT_DESCRIPTION) {
 		const {description} = action.payload;
+		console.log(description)
 		let {current_idx, submit_variables} = state;
 		submit_variables[current_idx]["description"] = description;
 		return Object.assign({}, state, {
@@ -200,6 +201,7 @@ function rootReducer(state = initialState, action) {
 	}
 	if(action.type === EDIT_SOP) {
 		const {sop} = action.payload;
+		console.log(sop)
 		let {current_idx, submit_variables} = state;
 		submit_variables[current_idx]["sop"] = sop;
 		return Object.assign({}, state, {

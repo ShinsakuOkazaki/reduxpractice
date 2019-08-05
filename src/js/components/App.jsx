@@ -19,7 +19,7 @@ const App = () => (
     {/* <div>
       <KeyUpload />
     </div> */}
-    <div className="column">
+    <div className="column-left">
       <div className="w3-margin">
         <FileInput/>
       </div>
@@ -33,7 +33,7 @@ const App = () => (
         <Switching/>
       </div>
     </div> 
-    <div className="column">
+    <div className="column-middle">
       <div className="w3-margin">
         <Descriotion/>
       </div>
@@ -41,7 +41,7 @@ const App = () => (
         <SOP/>
       </div>
     </div>
-    <div className="column">
+    <div className="column-right">
       <div className="w3-margin">
         <AssociatedVisit/>
       </div>

@@ -18,38 +18,6 @@
 }
 
 
-div .rt-th .rt-resizableheader {
-    padding: 0px;
-}
-
-.h-match {
-    background: #b4ffc8;
-}
-
-.h-unmatch {
-    background: red;
-}
-
-span .arrow{
-    height: 10;
-}
-
-.header-c {
-    background:  #b4ffc8;
-}
-
-.match-flag {
-    margin: 0px;
-}
-.choice {
-    display: inline; 
-    padding: 5px;
-}
-.mutiple-panel {
-    width: 350px;
-  
-}
-
 /* Create three equal columns that floats next to each other */
 .column {
     float: left;
@@ -63,6 +31,8 @@ span .arrow{
     display: table;
     clear: both;
   }
+
+  
   
   /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
   @media screen and (max-width:600px) {
@@ -70,3 +40,53 @@ span .arrow{
       width: 100%;
     }
   }
+
+.multi-spine { 
+  // position: absolute;
+  // left: 0; 
+  text-align: left; 
+  padding: 0.429em;
+  width: 40%;
+}
+
+.multi-submit {
+  // position: absolute;
+  // right: 0; 
+  text-align: right;
+  width: 40%;
+}
+
+.multi-arrow {
+  text-align: center;
+  padding: 0.429em;
+  width: 20%;
+}
+
+
+.multi-form {
+  width: 100%;
+  display: flex;
+  flex-wrap:wrap;
+  // justify-content: center; 
+  // position: relative;
+  padding: 5px;
+}
+
+
+.column-left {
+  float: left;
+  width: 35%;
+  padding:10px;
+}
+
+.column-right {
+  float: left;
+  width: 35%;
+  padding:10px;
+}
+
+.column-middle {
+  float: left;
+  width: 30%;
+  padding:10px;
+}
