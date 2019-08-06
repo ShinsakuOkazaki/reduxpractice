@@ -14,15 +14,19 @@ class DefaultDropdown extends React.Component {
         //const current_variable_type = current_variable["variable_type"];
         const {current_variable_type, variable_types} = this.props;
         return (
-            <Dropdown 
-                    value={current_variable_type} 
-                    options={variable_types} 
-                    onChange={(e) => {
-                            this.props.editDataType({ variable_type: e.target.value});
-                        }   
-                    } 
-                    placeholder="Select Data Type"
-            />
+            <div>
+                <p>Data Type</p>
+                <Dropdown 
+                        value={current_variable_type} 
+                        options={variable_types} 
+                        onChange={(e) => {
+                                this.props.editDataType({ variable_type: e.target.value});
+                            }   
+                        } 
+                        placeholder="Select Data Type"
+                />
+            </div>
+            
         )
     }
 }

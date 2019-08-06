@@ -11,7 +11,10 @@ class DefaultDescription extends React.Component{
     render() {
         const {description} = this.props;
         return (
-            <InputTextarea rows={10} cols={50} value={description} onChange={(e) => this.props.editDescription({description:e.target.value})} />
+            <div>
+                <p>Discription</p>
+                <InputTextarea rows={10} cols={50} value={description} onChange={(e) => this.props.editDescription({description:e.target.value})} />
+            </div>
         )
     }
 }

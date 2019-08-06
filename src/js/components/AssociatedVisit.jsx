@@ -15,12 +15,16 @@ class DefaultVisit extends React.Component {
         const {columns, visit_time} = this.props;
         const options = columns.map(x => ({label: x, value: x}));
         return (
+            <div>
+                <p>Associated Visit Date</p>
                 <Select 
                     isMulti 
                     value={visit_time}
                     options={options} 
                     onChange={this.handleChange}
                 />
+            </div>
+                
         )
     }
 }

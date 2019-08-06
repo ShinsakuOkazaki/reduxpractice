@@ -15,13 +15,15 @@ class DefaultLocation extends React.Component {
         const {columns, location} = this.props;
         const options = columns.map(x => ({label: x, value: x}));
         return (
-    
+            <div>
+                <p>Associated Location</p>
                 <Select 
                     isMulti 
                     value={location}
                     options={options} 
                     onChange={this.handleChange}
                 />
+            </div>   
         )
     }
 }

@@ -3,7 +3,6 @@ import FileInput from './FileInput.jsx';
 import TableSub from './TableSub.jsx';
 import KeyUpload from "./KeyUpload.jsx"
 import VerifyButton from "./Verify.jsx";
-import InputName from "./InputName.jsx";
 import TypeDropdown from "./DataType.jsx";
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -13,6 +12,8 @@ import Descriotion from "./Description.jsx";
 import SOP from "./SOP.jsx";
 import AssociatedVisit from "./AssociatedVisit.jsx";
 import AssociatedLocation from "./AssociatedLocation.jsx";
+import VariablePanel from "./VariablePanel.jsx";
+
 
 const App = () => (
   <div>
@@ -24,7 +25,7 @@ const App = () => (
         <FileInput/>
       </div>
       <div className="w3-margin">
-        <InputName/>
+        <VariablePanel/>
       </div>
       <div className="w3-margin">
         <TypeDropdown/>

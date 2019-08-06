@@ -15,7 +15,9 @@ import { INPUT_FILE,
          EDIT_DESCRIPTION,
          EDIT_SOP,
          ADD_VISIT,
-         ADD_LOCATION
+         ADD_LOCATION,
+         EDIT_UNIT,
+         EDIT_SEARCH
         } from "../constants/action-types";
 
 
@@ -81,6 +83,14 @@ export function addVisit(payload) {
 }
 export function addLocation(payload) {
   return { type: ADD_LOCATION, payload}
+}
+
+export function editUnit(payload) {
+  return { type: EDIT_UNIT, payload }
+}
+
+export function editSearch(payload) {
+  return { type: EDIT_SEARCH, payload }
 }
 
 export function getData() {

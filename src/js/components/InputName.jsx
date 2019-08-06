@@ -11,10 +11,11 @@ class Input extends React.Component {
     render() {
         
         return (
-            <InputText 
-                value={this.props.column} 
-                onChange = { (e) => 
-                    this.props.editName({column: e.target.value})} />
+                <InputText 
+                    
+                    value={this.props.column} 
+                    onChange = { (e) => 
+                        this.props.editName({column: e.target.value})} />
         )
     }
 }

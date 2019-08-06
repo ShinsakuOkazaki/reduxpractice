@@ -16,25 +16,26 @@ class DefaultMatchedChoice extends React.Component {
         this.setState({inputValue: event.target.value});
     }
     handleBlur() {
-        const {temp_submit_multiple, idx} = this.props
-        temp_submit_multiple[idx] = this.state.inputValue;
-        this.props.changeChoice({new_multiple: temp_submit_multiple});
+        const {multiple, idx} = this.props;
+        const submit_multiple = multiple.map(x => x["submit"]);
+        multiple[idx]["submit"] = this.state.inputValue;
+        this.props.changeChoice({new_multiple: multiple});
     }
     componentDidMount() {
-        const {temp_submit_multiple, idx} = this.props
-        this.setState({inputValue: temp_submit_multiple[idx]});
+        const {multiple, idx} = this.props;
+        this.setState({inputValue: multiple[idx]["submit"]});
      }
     render() {
-        const {temp_submit_multiple, temp_spine_multiple, idx} = this.props
+        const {multiple, idx} = this.props;
         return (
             <form className="multi-form">
                 <div className="multi-spine">
-                    {temp_spine_multiple[idx]}
+                    {multiple[idx]["spine"]}
                 </div>
                 <div className="multi-arrow"><i className="pi pi-arrow-right" style={{'fontsize': '3em'}}></i></div>
                 <div className="multi-submit">
-                    <InputText type="text"
-                        id = {idx}  
+                    <InputText type="text" 
+                        id={idx}
                         value={this.state.inputValue} 
                         onChange={this.handleChange}
                         onBlur={this.handleBlur}

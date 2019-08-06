@@ -16,7 +16,9 @@ import { INPUT_FILE,
 		 EDIT_DESCRIPTION,
 		 EDIT_SOP,
 		 ADD_VISIT,
-		 ADD_LOCATION
+		 ADD_LOCATION,
+		 EDIT_UNIT,
+		 EDIT_SEARCH
 		} from "../constants/action-types";
 
 
@@ -33,7 +35,8 @@ const initialState = {
 			sop: "brabra",
 			multiple: [],
 			visit_time: [],
-			location: [] 
+			location: [],
+			format: "unit" 
 		},
 		{
 			column_name: "VisitLabel", 
@@ -43,7 +46,33 @@ const initialState = {
 			sop: "brabra",
 			multiple: ["baseline", "2yr", "extra", "extr2"],
 			visit_time: [],
-			location: [] 
+			location: [],
+			format:"cm" 
+		},
+
+	],
+	ontologies : [
+		{
+			column_name: "CLINICAL_DIASTOLIC_BLOOD_PRESSURE", 
+			description:"This variable represents subjects",
+			variable_type: "number",
+			statistical_type: "continuous",
+			sop: "brabra",
+			multiple: [],
+			visit_time: [],
+			location: [],
+			format: "mm" 
+		},
+		{
+			column_name: "CLINICAL_AMBULATORY_SYSTOLIC_BLOOD_PRESSURE_AWAKE", 
+			description:"This variable represents subjects",
+			variable_type: "number",
+			statistical_type: "continuous",
+			sop: "brabra",
+			multiple: [],
+			visit_time: [],
+			location: [],
+			format: "cm" 
 		}
 	],
 	variable_types: [
@@ -65,9 +94,25 @@ const initialState = {
 			sop: "",
 			multiple: [],
 			visit_time: [],
-			location: [] 
+			location: [], 
+			variable_class: "",
+			format:"",
+			search_by: "other"
 		}
 	],
+	search_option: [
+		{label: "Variable", value: "variable"},
+		{label: "Ontology", value: "ontology"},
+		{label: "Other", value: "other"}
+	],
+	formats: [
+		{label: "MM/DD/YY", value: "mm/dd/yy"},
+		{label: "cm", value: "cm"}, 
+		{label: "mm", value: "mm"},
+		{label:  "unit", value:  "unit"}
+	],
+	variable_option: [],
+	ontology_option: [],
 	matching: false, 
 	key_col: [],
 	match: [],
@@ -78,8 +123,11 @@ function rootReducer(state = initialState, action) {
 	
 	if (action.type === INPUT_FILE) {
 		const {columns, data} = action.payload;
-		const spine_variables = state.spine_variables;
+		const {spine_variables, ontologies} = state;
 		const spine_columns = spine_variables.map(x => x['column_name']);
+		const ontology_names = ontologies.map(x =>  x['column_name']);
+		const variable_option = spine_columns.map(x => ({label: x, value: x}));
+		const ontology_option = ontology_names.map(x => ({label: x, value: x}));
 		let submit_variables = new Array(columns.length);
 		const unique = (value, index, self) => {
 			return self.indexOf(value) === index;
@@ -89,12 +137,30 @@ function rootReducer(state = initialState, action) {
 				let idx_variable = spine_columns.indexOf(columns[i]);
 				submit_variables[i] = Object.assign({}, spine_variables[idx_variable]);
 				if (submit_variables[i]["variable_type"] === "multiple"){
-					const values = data.map(x => x[columns[i]]);
-					const multiple = values.filter(unique);
+					let spine_multiple = spine_variables[idx_variable]["multiple"];
+					let values = data.map(x => x[columns[i]]);
+					let submit_multiple = values.filter(unique);
+					let matched_multiple = submit_multiple.filter(x => spine_multiple.includes(x));
+					let diff_spine = spine_multiple.filter(x => !submit_multiple.includes(x));
+					let diff_submit = submit_multiple.filter(x => !spine_multiple.includes(x));
+					let empty_spine = new Array(diff_submit.length).fill("");
+					let empty_submit = new Array(diff_spine.length).fill("");
+					diff_spine = diff_spine.concat(empty_spine)
+        			diff_submit = empty_submit.concat(diff_submit)
+					let temp_spine_multiple = matched_multiple.concat(diff_spine);
+					let temp_submit_multiple  = matched_multiple.concat(diff_submit);
+					let multiple = temp_spine_multiple.map((value, index) => ({spine: value, submit: temp_submit_multiple[index]}))
+					console.log(multiple)
 					submit_variables[i]["multiple"] = multiple;
-				
 				}
-			} else {
+				submit_variables[i]["search_by"] = "variable";
+			} 
+			else if (ontology_names.includes(columns[i])) {
+				let idx_ontology = ontology_names.indexOf(columns[i]);
+				submit_variables[i] = Object.assign({}, ontologies[idx_ontology]);
+				submit_variables[i]["search_by"] = "ontology";
+			}
+			else {
 				submit_variables[i] = {
 					column_name: columns[i], 
 					description: "",
@@ -103,14 +169,18 @@ function rootReducer(state = initialState, action) {
 					sop: "",
 					multiple: [],
 					visit_time: [],
-					location: [] 
+					location: [],
+					format: "",
+					search_by: "other"
 					};
 			}
 		}
 		return Object.assign({}, state, {
 			columns : columns,
 			data: data,
-			submit_variables: submit_variables
+			submit_variables: submit_variables,
+			variable_option: variable_option,
+			ontology_option: ontology_option
 		});
 	}
 	
@@ -174,6 +244,23 @@ function rootReducer(state = initialState, action) {
 			submit_variables: submit_variables
 		})
 	}
+	if(action.type === EDIT_UNIT) {
+		const {format} = action.payload;
+		let {current_idx, submit_variables} = state;
+		submit_variables[current_idx]["format"] = format;
+		return Object.assign({}, state, {
+			submit_variables: submit_variables
+		})
+	}
+	if(action.type === EDIT_SEARCH) {
+		const {search_by} = action.payload;
+		let {current_idx, submit_variables} = state;
+		submit_variables[current_idx]["search_by"] = search_by;
+		return Object.assign({}, state, {
+			submit_variables: submit_variables
+		})
+	}
+
 	if(action.type === ADD_VISIT) {
 		const {visit_time} = action.payload;
 		let {current_idx, submit_variables} = state;
@@ -221,6 +308,7 @@ function rootReducer(state = initialState, action) {
 	if(action.type === CHANGE_CHOICE) {
 		const {current_idx, submit_variables} = state;
 		const {new_multiple} = action.payload;
+		console.log("Change in action")
 		console.log(new_multiple)
 		let multiple = []
 		for (let i = 0; i < new_multiple.length; i++) {
