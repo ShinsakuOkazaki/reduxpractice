@@ -12,6 +12,7 @@ class DefaultStatUnit extends React.Component {
         
         return (
             <Dropdown
+                className="line-right"
                 value={current_statistical_type} 
                 options={statistical_types} 
                 onChange={(e) => {

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import {addVisit} from "../actions/index";
 import Select from 'react-select';
+import {ScrollPanel} from 'primereact/scrollpanel';
 
 class DefaultVisit extends React.Component {
     constructor(props) {
@@ -15,7 +16,8 @@ class DefaultVisit extends React.Component {
         const {columns, visit_time} = this.props;
         const options = columns.map(x => ({label: x, value: x}));
         return (
-            <div>
+            // <ScrollPanel className="associate adjust-top" style={{width: '100%', height: '200px'}}>
+            <div className=" adjust-top" style={{height: '250px'}}>
                 <p>Associated Visit Date</p>
                 <Select 
                     isMulti 
@@ -24,6 +26,7 @@ class DefaultVisit extends React.Component {
                     onChange={this.handleChange}
                 />
             </div>
+            //  </ScrollPanel>
                 
         )
     }

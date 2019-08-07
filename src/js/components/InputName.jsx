@@ -12,7 +12,7 @@ class Input extends React.Component {
         
         return (
                 <InputText 
-                    
+                    className="select-big"
                     value={this.props.column} 
                     onChange = { (e) => 
                         this.props.editName({column: e.target.value})} />

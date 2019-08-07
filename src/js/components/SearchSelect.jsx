@@ -12,7 +12,7 @@ class DefaultSearch extends React.Component {
         
         return (
             <Dropdown
-                className="search"
+                className="select-small"
                 value={current_search_by} 
                 options={search_option} 
                 onChange={(e) => {

@@ -96,3 +96,52 @@ p {
   margin-block-end: 0px;
 }
 
+
+
+
+.line-right {
+  display: inline-block;
+  width: 50%;
+}
+
+.line-left {
+  display: inline-block;
+  width: 50%;
+}
+
+.select-big {
+  max-width: 70%;
+  min-width: 70%;
+}
+
+.select-small {
+  width : 100px;
+  min-width: 30%;
+  max-width: 30%;
+}
+
+.help {
+  float: right;
+}
+
+.unit-stat {
+  margin-top: 45px;
+}
+
+.associate {
+  margin-bottom: 65px;
+}
+
+.adjust-top {
+  margin-top: 55px;
+}
+
+.data-type {
+  margin-top : 50px;
+  margin-left: 33.333%; 
+}
+
+.varify {
+  margin-left: 70%;
+}
+

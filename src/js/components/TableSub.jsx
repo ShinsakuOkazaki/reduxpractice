@@ -6,12 +6,14 @@ import { editCell } from "../actions/index";
 import Pagination from "./Pagination.jsx";
 import Header from "./Header.jsx";
 // import { getData } from "../actions/index";
-
+import {Sidebar} from 'primereact/sidebar';
+// import {Button} from 'primereact/button';
 
 
 class Table extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {visible:false}
         this.renderEditable = this.renderEditable.bind(this);
     }
       
@@ -19,7 +21,6 @@ class Table extends React.Component {
         const { data }= this.props;
         return (
           <div
-            style={{ backgroundColor: "#fafafa" }}
             contentEditable ={true}
             suppressContentEditableWarning ={true}
             onBlur={e => {
@@ -38,8 +39,9 @@ class Table extends React.Component {
       // }
       
       render() {
-        const { columns, data, match} = this.props;
+        const { columns, data, current_idx} = this.props;
         const renderEditable = this.renderEditable;
+        
         const newColumns = columns.map((column, id) => {
           return { Header: () => 
                       <div >
@@ -50,29 +52,47 @@ class Table extends React.Component {
                     filterable: false,
                     sortable: false,
                     Cell: renderEditable,
-                    width: 150
+                    width: 150,
+                    getHeaderProps: (state, rowInfo, column, instance) => {
+                      return {
+                        style: {
+                          background: column.id === columns[current_idx] ? null : '#A9A9A9'
+                        }
+                      }
+                    },
+                    getProps: (state, rowInfo, column) => {
+                      
+                      return {
+                          style: {
+                              background: column.id === columns[current_idx] ? null : '#A9A9A9'
+                          }
+                      }
+                    },
                   }
                 }
               )
 
         return (
           <div>
+          {/* <Sidebar visible={this.state.visible} position="bottom" onHide={(e) => this.setState({visible:false})}> */}
             <ReactTable
               data={data}
               columns={newColumns}
               PaginationComponent={Pagination}
               //showPagination = {true}
-              pageSize={5}
-              className="-striped -highlight"
-              getProps = {() => {
-                return {
-                  style: {
-                    'borderCollapse': 'separate',
-                    'borderSpacing': '15px'
-                  }
-                }
-              }}
+              pageSize={2}
+              // className="-striped -highlight"
+              // getProps = {() => {
+              //   return {
+              //     style: {
+              //       'borderCollapse': 'separate',
+              //       'borderSpacing': '15px'
+              //     }
+              //   }
+              // }}
             />
+          {/* </Sidebar> */}
+          {/* <Button label="Select Variable to edit" onClick={(e) => this.setState({visible:true})}/> */}
           </div>
         );
       }
@@ -89,7 +109,11 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  return {columns: state.columns, data: state.data, match: state.match};
+  return {
+    columns: state.columns,
+    data: state.data, match: state.match,
+    current_idx:state.current_idx
+  };
 };
 
 const TableSub = connect(mapStateToProps, mapDispatchToProps)(Table);

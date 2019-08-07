@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import {addLocation} from "../actions/index";
 import Select from 'react-select';
+import {ScrollPanel} from 'primereact/scrollpanel';
 
 class DefaultLocation extends React.Component {
     constructor(props) {
@@ -15,15 +16,18 @@ class DefaultLocation extends React.Component {
         const {columns, location} = this.props;
         const options = columns.map(x => ({label: x, value: x}));
         return (
-            <div>
+            // <ScrollPanel style={{width: '100%', height: '200px'}}>
+            <div style={{height: '200px'}}>
                 <p>Associated Location</p>
                 <Select 
+                    style={{width: '100%', height: '50px'}}
                     isMulti 
                     value={location}
                     options={options} 
                     onChange={this.handleChange}
                 />
-            </div>   
+            </div>
+            // </ScrollPanel>   
         )
     }
 }

@@ -14,7 +14,7 @@ class DefaultDropdown extends React.Component {
         //const current_variable_type = current_variable["variable_type"];
         const {current_variable_type, variable_types} = this.props;
         return (
-            <div>
+            <div >
                 <p>Data Type</p>
                 <Dropdown 
                         value={current_variable_type} 

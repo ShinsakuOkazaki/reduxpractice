@@ -12,6 +12,7 @@ class DefaultUnit extends React.Component {
         
         return (
             <Dropdown
+                className="line-left"
                 value={current_format} 
                 options={formats} 
                 onChange={(e) => {

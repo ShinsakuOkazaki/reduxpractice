@@ -11,9 +11,18 @@ class DefaultDescription extends React.Component{
     render() {
         const {description} = this.props;
         return (
-            <div>
+            <div className="adjust-top">
                 <p>Discription</p>
-                <InputTextarea rows={10} cols={50} value={description} onChange={(e) => this.props.editDescription({description:e.target.value})} />
+                <InputTextarea 
+                    rows={10} 
+                    cols={50} 
+                    value={description} 
+                    onChange={(e) => this.props.editDescription({description:e.target.value})} 
+                    tooltip="Iuput description of this variable.
+                             If it is matched to either one of variables in our system
+                             or ontology, this field shows a suggested description." 
+                    tooltipOptions={{position: 'right'}}
+                />
             </div>
         )
     }

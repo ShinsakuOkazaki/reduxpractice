@@ -13,6 +13,7 @@ import SOP from "./SOP.jsx";
 import AssociatedVisit from "./AssociatedVisit.jsx";
 import AssociatedLocation from "./AssociatedLocation.jsx";
 import VariablePanel from "./VariablePanel.jsx";
+import { Explanation } from "./Explanation.jsx";
 
 
 const App = () => (
@@ -21,13 +22,14 @@ const App = () => (
       <KeyUpload />
     </div> */}
     <div className="column-left">
+      <div><Explanation/></div>
       <div className="w3-margin">
         <FileInput/>
       </div>
       <div className="w3-margin">
         <VariablePanel/>
       </div>
-      <div className="w3-margin">
+      <div className="data-type">
         <TypeDropdown/>
       </div>
       <div className="w3-margin">
@@ -49,7 +51,7 @@ const App = () => (
       <div className="w3-margin">  
         <AssociatedLocation/>
       </div>
-      <div className="w3-margin">  
+      <div className="varify">  
         <VerifyButton/>
       </div>
     </div>

@@ -15,11 +15,15 @@ class DefaultSwitching extends React.Component {
             return (<MultipleChoice/>)
         } else {
             return (
-                <div>
-                    <p>Unit</p>
-                    <UnitDropdown />
-                    <p>Statistical Type</p>
-                    <StatUnit/>
+                <div className="unit-stat">
+                    <div className="line-left ">
+                        <p>Unit</p>
+                        <UnitDropdown/>
+                    </div>
+                    <div className="line-right ">
+                        <p>Statistical Type</p>
+                        <StatUnit/>
+                    </div>
                 </div>
             )
         }

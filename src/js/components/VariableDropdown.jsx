@@ -12,7 +12,7 @@ class DefaultDropdown extends React.Component {
         
         return (
             <Dropdown
-               
+                className="select-big"               
                 value={column_name} 
                 options={variable_option} 
                 onChange={(e) => {
