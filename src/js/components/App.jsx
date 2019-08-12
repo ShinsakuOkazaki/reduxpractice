@@ -13,7 +13,9 @@ import SOP from "./SOP.jsx";
 import AssociatedVisit from "./AssociatedVisit.jsx";
 import AssociatedLocation from "./AssociatedLocation.jsx";
 import VariablePanel from "./VariablePanel.jsx";
-import { Explanation } from "./Explanation.jsx";
+import StrategyPage from "./StrategyPage.jsx";
+import UploadPage from "./FileInputPage.jsx";
+
 
 
 const App = () => (
@@ -22,10 +24,8 @@ const App = () => (
       <KeyUpload />
     </div> */}
     <div className="column-left">
-      <div><Explanation/></div>
-      <div className="w3-margin">
-        <FileInput/>
-      </div>
+      <div><UploadPage/></div>
+      <div><StrategyPage/></div>
       <div className="w3-margin">
         <VariablePanel/>
       </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import XLSX from 'xlsx';
-import { inputFile } from '../actions/index'
+import {inputFile} from '../actions/index'
 class FileInput extends React.Component {
     constructor(props){
         super(props);
@@ -28,6 +28,7 @@ class FileInput extends React.Component {
                 }
               )
             this.props.inputFile({columns: columns, data: propData});
+
         };
         if (rABS) reader.readAsBinaryString(file);
         else reader.readAsArrayBuffer(file);

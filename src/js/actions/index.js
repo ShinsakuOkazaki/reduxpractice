@@ -17,7 +17,9 @@ import { INPUT_FILE,
          ADD_VISIT,
          ADD_LOCATION,
          EDIT_UNIT,
-         EDIT_SEARCH
+         EDIT_SEARCH,
+         STRATEGY_VISIBLE,
+         UPLOAD_VISIBLE
         } from "../constants/action-types";
 
 
@@ -91,6 +93,13 @@ export function editUnit(payload) {
 
 export function editSearch(payload) {
   return { type: EDIT_SEARCH, payload }
+}
+
+export function strategyVisible(payload) {
+  return { type: STRATEGY_VISIBLE, payload }
+}
+export function uploadVisible(payload) {
+  return { type: UPLOAD_VISIBLE, payload }
 }
 
 export function getData() {

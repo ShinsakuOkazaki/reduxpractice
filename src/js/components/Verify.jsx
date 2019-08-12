@@ -2,7 +2,7 @@ import {Button} from 'primereact/button';
 import React from "react";
 import {slideIndex} from "../actions/index"
 import { connect } from "react-redux";
-
+import {strategyVisible} from "../actions/index"
 
 class DefaultButton extends React.Component {
     constructor(props) {
@@ -14,6 +14,7 @@ class DefaultButton extends React.Component {
             <Button label="Verify" onClick = { ()=>{
                     const next_idx = current_idx + 1;
                     this.props.slideIndex(next_idx);
+                    this.props.strategyVisible(true)
                 }   
             } 
             />
@@ -26,7 +27,8 @@ class DefaultButton extends React.Component {
 
 const mapDispatchToProps = dispatch => {
     return { 
-      slideIndex: current_idx => dispatch(slideIndex(current_idx))
+      slideIndex: current_idx => dispatch(slideIndex(current_idx)),
+      strategyVisible: page_visible => dispatch(strategyVisible(page_visible))
     };
 }
 

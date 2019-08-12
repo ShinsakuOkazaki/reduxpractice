@@ -19,3 +19,5 @@ export const ADD_VISIT = "ADD_VISIT";
 export const ADD_LOCATION = "ADD_LOCATION";
 export const EDIT_UNIT = "EDIT_UNIT";
 export const EDIT_SEARCH = "EDIT_SEARCH";
+export const STRATEGY_VISIBLE = "STRATEGY_VISIBLE";
+export const UPLOAD_VISIBLE = "UPLOAD_VISIBLE";

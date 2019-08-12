@@ -18,7 +18,9 @@ import { INPUT_FILE,
 		 ADD_VISIT,
 		 ADD_LOCATION,
 		 EDIT_UNIT,
-		 EDIT_SEARCH
+		 EDIT_SEARCH,
+		 STRATEGY_VISIBLE,
+		 UPLOAD_VISIBLE
 		} from "../constants/action-types";
 
 
@@ -113,6 +115,8 @@ const initialState = {
 	],
 	variable_option: [],
 	ontology_option: [],
+	strategy_page: false,
+	upload_page: true,
 	matching: false, 
 	key_col: [],
 	match: [],
@@ -126,8 +130,10 @@ function rootReducer(state = initialState, action) {
 		const {spine_variables, ontologies} = state;
 		const spine_columns = spine_variables.map(x => x['column_name']);
 		const ontology_names = ontologies.map(x =>  x['column_name']);
-		const variable_option = spine_columns.map(x => ({label: x, value: x}));
-		const ontology_option = ontology_names.map(x => ({label: x, value: x}));
+		let variable_option = spine_columns.map(x => ({label: x, value: x}));
+		variable_option.push({label: "Cannot find suitable variable", value: ""})
+		let ontology_option = ontology_names.map(x => ({label: x, value: x}));
+		ontology_option.push({label: "Cannot find suitable ontology", value: ""})
 		let submit_variables = new Array(columns.length);
 		const unique = (value, index, self) => {
 			return self.indexOf(value) === index;
@@ -319,6 +325,16 @@ function rootReducer(state = initialState, action) {
 		submit_variables[current_idx]["multiple"] = multiple
 		return Object.assign({}, state, {
 			submit_variables: submit_variables
+		})
+	}
+	if(action.type === STRATEGY_VISIBLE) {
+		return Object.assign({}, state, {
+			strategy_page: action.payload
+		})
+	}
+	if(action.type === UPLOAD_VISIBLE) {
+		return Object.assign({}, state, {
+			upload_page: action.payload
 		})
 	}
 	
