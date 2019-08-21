@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {InputTextarea} from 'primereact/inputtextarea';
-import {editSOP} from "../actions/index";
+import {editSubmit} from "../actions/index";
 
 
 class DefaultSOP extends React.Component{
@@ -13,7 +13,7 @@ class DefaultSOP extends React.Component{
         return (
             <div>
                 <p>Standard Operating Procedure</p>
-                <InputTextarea rows={10} cols={50} value={sop} onChange={(e) => this.props.editSOP({sop: e.target.value})} />
+                <InputTextarea rows={10} cols={50} value={sop} onChange={(e) => this.props.editSubmit({sop: e.target.value})} />
             </div>
         )
     }
@@ -27,7 +27,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return { 
-      editSOP: (sop) => dispatch(editSOP(sop))
+      editSubmit: (sop) => dispatch(editSubmit(sop))
     };
 }
 

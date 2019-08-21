@@ -1,16 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import {addLocation} from "../actions/index";
-import Select from 'react-select';
-import {ScrollPanel} from 'primereact/scrollpanel';
+import {addAssociate} from "../actions/index";
+import {MultiSelect} from 'primereact/multiselect';
 
 class DefaultLocation extends React.Component {
     constructor(props) {
         super(props)
         this.handleChange = this.handleChange.bind(this)
     }
-    handleChange(location) {
-        this.props.addLocation({location: location})
+    handleChange(e) {
+        this.props.addAssociate({location: e.value})
     }
     render() {
         const {columns, location} = this.props;
@@ -19,13 +18,7 @@ class DefaultLocation extends React.Component {
             // <ScrollPanel style={{width: '100%', height: '200px'}}>
             <div style={{height: '200px'}}>
                 <p>Associated Location</p>
-                <Select 
-                    style={{width: '100%', height: '50px'}}
-                    isMulti 
-                    value={location}
-                    options={options} 
-                    onChange={this.handleChange}
-                />
+                <MultiSelect value={location} options={options} onChange={this.handleChange} />
             </div>
             // </ScrollPanel>   
         )
@@ -41,7 +34,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return { 
-      addLocation: (visit_time) => dispatch(addLocation(visit_time))
+      addAssociate: (visit_time) => dispatch(addAssociate(visit_time))
     };
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { editDatatype } from "../actions/index";
+import { editSubmit } from "../actions/index";
 import {Dropdown} from 'primereact/dropdown';
 
 
@@ -17,7 +17,7 @@ class DefaultDropdown extends React.Component {
                         value={current_variable_type} 
                         options={variable_types} 
                         onChange={(e) => {
-                                this.props.editDataType({ variable_type: e.target.value});
+                                this.props.editSubmit({ variable_type: e.target.value});
                             }   
                         } 
                         placeholder="Select Data Type"
@@ -37,7 +37,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return { 
-      editDataType: (variable_type) => dispatch(editDatatype(variable_type))
+      editSubmit: (variable_type) => dispatch(editSubmit(variable_type))
     };
 }
 

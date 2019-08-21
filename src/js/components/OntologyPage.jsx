@@ -1,22 +1,30 @@
 import React from 'react';
-import {Dropdown} from 'primereact/dropdown';
 import { connect } from "react-redux";
-import {editSubmit} from "../actions/index";
+import OntologySearch from './OntologySearch.jsx';
+import OntologyList from './OntologyList.jsx';
+import VerifyButton from "./Verify.jsx";
+import {ProgressSpinner} from 'primereact/progressspinner';
+import GoToColumn from "./GoToColumn.jsx";
+
 
 class DefaultPage extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
     }
+
     render() {
-        const {ontology_option, current_variable} = this.props
-        const option = ontology_option.map(x => ({label: x, value:x}))
         return (
-            <Dropdown 
-                value={current_variable}
-                options={option}
-                onChange={(e) => this.props.editSubmit({column_name: e.target.value})} 
-                placeholder="Select an Ontology"
-            />
+            <div>
+                <h3>{this.props.current_variable}</h3>
+                <OntologySearch/>
+                {this.props.loading ? (
+                     <ProgressSpinner/>
+                ):(
+                    <OntologyList/>
+                )}
+                <GoToColumn/>
+                <VerifyButton/>
+            </div>
         )
     }
 }
@@ -29,11 +37,5 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => {
-    return { 
-        editSubmit: column_name => dispatch(editSubmit(column_name))
-    };
-}
-
- const OntologyPage = connect(mapStateToProps, mapDispatchToProps)(DefaultPage);
+ const OntologyPage = connect(mapStateToProps)(DefaultPage);
  export default OntologyPage;

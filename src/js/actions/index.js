@@ -4,18 +4,7 @@ import { INPUT_FILE,
          DATA_LOADED,  
          LOAD_STARTED, 
          SLIDE_INDEX, 
-         COLUMN_MATCHING,
-         UPDATE_CURRENT,
-         STORE_SUBMIT,
-         EDIT_DATATYPE,
-         GOTO_INDEX,
          CHANGE_CHOICE,
-         EDIT_STATTYPE,
-         EDIT_DESCRIPTION,
-         EDIT_SOP,
-         ADD_VISIT,
-         ADD_LOCATION,
-         EDIT_UNIT,
          EDIT_SEARCH,
          STRATEGY_VISIBLE,
          SET_STRATEGY_PAGE,
@@ -26,7 +15,11 @@ import { INPUT_FILE,
          SET_PAGE,
          GO_TO_PAGE,
          ONTOLOGY_STARTED,
-         ONTOLOGY_LOADED
+         ONTOLOGY_LOADED,
+         SET_SEARCH,
+         GET_CLASS_NAME,
+         PREPARE_NEXT,
+         ADD_ASSOCIATE
         } from "../constants/action-types";
 
 
@@ -46,44 +39,9 @@ export function slideIndex(payload) {
   return { type: SLIDE_INDEX, payload }
 }
 
-export function columnMatching(payload) {
-  return { type: COLUMN_MATCHING, payload }
-}
 
-export function updateCurrent(payload) {
-  return { type: UPDATE_CURRENT, payload }
-}
-
-export function storeSubmit(payload) {
-  return { type: STORE_SUBMIT, payload }
-}
-export function editDatatype(payload) {
-  return { type: EDIT_DATATYPE, payload }
-}
-export function gotoIndex(payload) {
-  return { type: GOTO_INDEX, payload }
-}
 export function changeChoice(payload) {
   return { type: CHANGE_CHOICE, payload }
-}
-export function editStatType(payload) {
-  return { type: EDIT_STATTYPE, payload }
-}
-export function editDescription(payload) {
-  return { type: EDIT_DESCRIPTION, payload}
-}
-export function editSOP(payload) {
-  return { type: EDIT_SOP, payload}
-}
-export function addVisit(payload) {
-  return { type: ADD_VISIT, payload}
-}
-export function addLocation(payload) {
-  return { type: ADD_LOCATION, payload}
-}
-
-export function editUnit(payload) {
-  return { type: EDIT_UNIT, payload }
 }
 
 export function editSearch(payload) {
@@ -133,14 +91,25 @@ export function ontologyStarted() {
 export function ontologyLoaded(payload) {
   return {type: ONTOLOGY_LOADED, payload}
 }
+export function setSearch(payload) {
+  return {type: SET_SEARCH, payload}
+}
 
-
+export function getClassName(payload) {
+  return {type: GET_CLASS_NAME, payload}
+}
+export function prepareNext() {
+  return {type: PREPARE_NEXT}
+}
+export function addAssociate(payload) {
+  return {type: ADD_ASSOCIATE, payload}
+}
 
 
 export function getData(column) {
   return function(dispatch) {
     dispatch(loadStarted({ontology:[]}))
-    const url = "http://data.bioontology.org/search?q=" + column + "&suggest=true";
+    const url = "http://data.bioontology.org/search?q=" + column + "&ontology&suggest=true&roots_only=true";
     return fetch( url, 
                 {
                   headers: {'Authorization': 'apikey token=67b7e570-22e9-4759-b747-da6cb8703580'}
@@ -152,28 +121,73 @@ export function getData(column) {
     .then(
       function(json) {
         const ontology_ids = json["collection"].map(x => x["links"]["ontology"]);
+        const class_name = json["collection"].map(x => x["prefLabel"])
+        const ontologies = []
         for (let i = 0; i < ontology_ids.length; i++) {
-          dispatch(getOntology(ontology_ids[i]))
+          ontologies.push(getOntology(ontology_ids[i]))
         }
+        dispatch(getClassName({class_name: class_name}))
       }
+    )
+    .then(
+      dispatch(dataLoaded())
     )
   }
 }
 
 export function getOntology(ontology_id) {
-  return function(dispatch) {
-    dispatch(ontologyStarted())
-    console.log(ontology_id)
-    return fetch( ontology_id, 
-                {
-                  headers: {'Authorization': 'apikey token=67b7e570-22e9-4759-b747-da6cb8703580'}
-                })
-    .then(
-      response => response.json(), 
-      error => console.log("An error occired.", error)
-    )
-    .then((json) => {
-      dispatch(ontologyLoaded({ontology:json["name"]}));
-    });
-  }
+  const response = fetch( ontology_id, 
+    {
+      headers: {'Authorization': 'apikey token=67b7e570-22e9-4759-b747-da6cb8703580'}
+    })
+  const ontology = response.json()
+  return (ontology["name"])
 }
+
+
+
+
+// export function getData(column) {
+//   return function(dispatch) {
+//     dispatch(loadStarted({ontology:[]}))
+//     const url = "http://data.bioontology.org/search?q=" + column + "&ontology&suggest=true&roots_only=true";
+//     return fetch( url, 
+//                 {
+//                   headers: {'Authorization': 'apikey token=67b7e570-22e9-4759-b747-da6cb8703580'}
+//                 })
+//     .then(
+//       response => response.json(), 
+//       error => console.log("An error occired.", error)
+//     )
+//     .then(
+//       function(json) {
+//         const ontology_ids = json["collection"].map(x => x["links"]["ontology"]);
+//         const class_name = json["collection"].map(x => x["prefLabel"])
+//         dispatch(getClassName({class_name: class_name}))
+//         for (let i = 0; i < ontology_ids.length; i++) {
+//           dispatch(getOntology(ontology_ids[i]))
+//         }
+//       }
+//     )
+//     .then(
+//       dispatch(dataLoaded())
+//     )
+//   }
+// }
+
+// export function getOntology(ontology_id) {
+//   return function(dispatch) {
+//     console.log(ontology_id)
+//     return fetch( ontology_id, 
+//                 {
+//                   headers: {'Authorization': 'apikey token=67b7e570-22e9-4759-b747-da6cb8703580'}
+//                 })
+//     .then(
+//       response => response.json(), 
+//       error => console.log("An error occired.", error)
+//     )
+//     .then((json) => {
+//       dispatch(ontologyLoaded({ontology:json["name"]}));
+//     });
+//   }
+// }

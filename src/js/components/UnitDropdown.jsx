@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Dropdown} from 'primereact/dropdown';
-import {editUnit} from "../actions/index";
+import {editSubmit} from "../actions/index";
 
 class DefaultUnit extends React.Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class DefaultUnit extends React.Component {
                 value={current_format} 
                 options={formats} 
                 onChange={(e) => {
-                        this.props.editUnit({ format: e.target.value});
+                        this.props.editSubmit({ format: e.target.value});
                     }   
                 } 
                 placeholder="Select Unit"
@@ -35,7 +35,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return { 
-        editUnit: (format) => dispatch(editUnit(format))
+        editSubmit: (format) => dispatch(editSubmit(format))
     };
 }
 

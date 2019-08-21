@@ -7,7 +7,7 @@ import SOP from "./SOP.jsx";
 import AssociatedVisit from "./AssociatedVisit.jsx";
 import AssociatedLocation from "./AssociatedLocation.jsx";
 import VerifyButton from "./Verify.jsx";
-
+import GoToColumn from "./GoToColumn.jsx";
 
 
 class DefaultPage extends React.Component {
@@ -43,7 +43,10 @@ class DefaultPage extends React.Component {
                     <div className="w3-margin">  
                     <AssociatedLocation/>
                     </div>
-                    <div className="varify">  
+                    <div className="w3-margin">   
+                    <GoToColumn/>
+                    </div>
+                    <div className="varify"> 
                     <VerifyButton/>
                     </div>
                 </div>

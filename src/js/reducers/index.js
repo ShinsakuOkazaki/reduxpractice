@@ -2,22 +2,10 @@ import { INPUT_FILE,
 		 EDIT_CELL,
 		 EDIT_HEADER,
 		 DATA_LOADED,
-		 MATCHED,
 		 LOAD_STARTED,
 		 SLIDE_INDEX,
-		 COLUMN_MATCHING,
-		 UPDATE_CURRENT,
-		 STORE_SUBMIT,
-		 EDIT_DATATYPE,
-		 GOTO_INDEX,
 		 CHANGE_CHOICE,
-		 EDIT_STATTYPE,
-		 EDIT_DESCRIPTION,
 		 EDIT_SOP,
-		 ADD_VISIT,
-		 ADD_LOCATION,
-		 EDIT_UNIT,
-		 EDIT_SEARCH,
 		 STRATEGY_VISIBLE,
 		 UPLOAD_VISIBLE,
 		 SET_STRATEGY_PAGE,
@@ -25,7 +13,11 @@ import { INPUT_FILE,
 		 SET_PAGE,
 		 GO_TO_PAGE,
 		 ONTOLOGY_LOADED,
-		 ONTOLOGY_STARTED
+		 ONTOLOGY_STARTED,
+		 SET_SEARCH,
+		 GET_CLASS_NAME,
+		 PREPARE_NEXT,
+		 ADD_ASSOCIATE
 		} from "../constants/action-types";
 import stringSimilarity from "string-similarity";
 
@@ -143,6 +135,7 @@ const initialState = {
 	strategy_page: false,
 	upload_page: true,
 	page_type: "variable",
+	search: "",
 	loading: false
 };
 
@@ -204,7 +197,9 @@ function rootReducer(state = initialState, action) {
 		console.log("submit payload:", action.payload)
 		let {submit_variables, current_idx} = state
 		submit_variables[current_idx] = Object.assign({}, submit_variables[current_idx], action.payload)
-		
+		return Object.assign({}, state, {
+			submit_variables: [...submit_variables]
+		})
 	}
 	if (action.type === SET_PAGE) {
 		return Object.assign({}, state, {
@@ -244,6 +239,8 @@ function rootReducer(state = initialState, action) {
 		} else if (page_type === "ontology") {
 			submit_variable = {
 				column_name: submit_column, 
+				ontology_name: "",
+				ontology_id: "",
 				description:""
 			}
 		}
@@ -271,12 +268,23 @@ function rootReducer(state = initialState, action) {
 		console.log("ontology_option", ontology_option)
 		return Object.assign({}, state, {
 			ontology_option: [...ontology_option, ontology],
-			loading: !state.loading
 		})
 	}
+	if (action.type === GET_CLASS_NAME) {
+		const {class_name} = action.payload
+		return Object.assign({}, state, {
+			class_name: class_name
+		})
+	}
+
 	if (action.type === ONTOLOGY_STARTED) {
 		return Object.assign({}, state, {
 			loading: !state.loading
+		})
+	}
+	if (action.type === SET_SEARCH) {
+		return Object.assign({}, state, {
+			search: action.payload
 		})
 	}
 	if(action.type === SLIDE_INDEX) {
@@ -284,72 +292,22 @@ function rootReducer(state = initialState, action) {
 			current_idx: action.payload
 		})
 	}
-	if(action.type === COLUMN_MATCHING) {
-		const {column, current_idx} = action.payload
-		const spine_columns = state.spine_variables.map(x => x["column_name"]);
-		const matching = spine_columns.includes(column)
+	if(action.type === PREPARE_NEXT) {
 		return Object.assign({}, state, {
-			matching: matching
+			page_type: "variable",
+			ontology_option :[],
+			search: ""
 		})
 	}
-	if(action.type === EDIT_DATATYPE) {
-		const {variable_type} = action.payload;
+	
+	if(action.type === ADD_ASSOCIATE) {
 		let {current_idx, submit_variables} = state;
-		submit_variables[current_idx]["variable_type"] = variable_type;
+		submit_variables[current_idx] = Object.assign({}, submit_variables[current_idx], action.payload)
 		return Object.assign({}, state, {
-			submit_variables: submit_variables
+			submit_variables: [...submit_variables]
 		})
 	}
-	if(action.type === EDIT_STATTYPE) {
-		const {statistical_type} = action.payload;
-		let {current_idx, submit_variables} = state;
-		submit_variables[current_idx]["statistical_type"] = statistical_type;
-		return Object.assign({}, state, {
-			submit_variables: submit_variables
-		})
-	}
-	if(action.type === EDIT_UNIT) {
-		const {format} = action.payload;
-		let {current_idx, submit_variables} = state;
-		submit_variables[current_idx]["format"] = format;
-		return Object.assign({}, state, {
-			submit_variables: submit_variables
-		})
-	}
-	if(action.type === EDIT_SEARCH) {
-		const {search_by} = action.payload;
-		let {current_idx, submit_variables} = state;
-		submit_variables[current_idx]["search_by"] = search_by;
-		return Object.assign({}, state, {
-			submit_variables: submit_variables
-		})
-	}
-
-	if(action.type === ADD_VISIT) {
-		const {visit_time} = action.payload;
-		let {current_idx, submit_variables} = state;
-		submit_variables[current_idx]["visit_time"] = visit_time;
-		return Object.assign({}, state, {
-			submit_variables: submit_variables
-		})
-	}
-	if(action.type === ADD_LOCATION) {
-		const {location} = action.payload;
-		let {current_idx, submit_variables} = state;
-		submit_variables[current_idx]["location"] = location;
-		return Object.assign({}, state, {
-			submit_variables: submit_variables
-		})
-	}
-	if(action.type === EDIT_DESCRIPTION) {
-		const {description} = action.payload;
-		console.log(description)
-		let {current_idx, submit_variables} = state;
-		submit_variables[current_idx]["description"] = description;
-		return Object.assign({}, state, {
-			submit_variables: submit_variables
-		})
-	}
+	
 	if(action.type === EDIT_SOP) {
 		const {sop} = action.payload;
 		console.log(sop)
@@ -359,16 +317,7 @@ function rootReducer(state = initialState, action) {
 			submit_variables: submit_variables
 		})
 	}
-	if(action.type === STORE_SUBMIT) {
-		return Object.assign({}, state, {
-			submit_variables: action.payload
-		})
-	}
-	if(action.type === GOTO_INDEX) {
-		return Object.assign({}, state, {
-			current_idx: action.payload
-		})
-	}
+	
 	if(action.type === CHANGE_CHOICE) {
 		const {current_idx, submit_variables} = state;
 		const {new_multiple} = action.payload;

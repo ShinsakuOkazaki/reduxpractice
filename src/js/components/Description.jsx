@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {InputTextarea} from 'primereact/inputtextarea';
-import {editDescription} from "../actions/index";
+import {editSubmit} from "../actions/index";
 
 
 class DefaultDescription extends React.Component{
@@ -17,7 +17,7 @@ class DefaultDescription extends React.Component{
                     rows={10} 
                     cols={50} 
                     value={description} 
-                    onChange={(e) => this.props.editDescription({description:e.target.value})} 
+                    onChange={(e) => this.props.editSubmit({description:e.target.value})} 
                     tooltip="Iuput description of this variable.
                              If it is matched to either one of variables in our system
                              or ontology, this field shows a suggested description." 
@@ -36,7 +36,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return { 
-      editDescription: (description) => dispatch(editDescription(description))
+      editSubmit: (description) => dispatch(editSubmit(description))
     };
 }
 

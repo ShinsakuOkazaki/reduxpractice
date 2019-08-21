@@ -1,6 +1,6 @@
 import {Button} from 'primereact/button';
 import React from "react";
-import {slideIndex, strategyVisible, setStrategyPage} from "../actions/index"
+import {slideIndex, strategyVisible, setStrategyPage,prepareNext} from "../actions/index"
 import { connect } from "react-redux";
 
 
@@ -15,6 +15,7 @@ class DefaultButton extends React.Component {
         this.props.slideIndex(next_idx);
         this.props.setStrategyPage()
         this.props.strategyVisible(true);
+        this.props.prepareNext()
     }
 
     render() {
@@ -31,7 +32,8 @@ const mapDispatchToProps = dispatch => {
     return { 
       slideIndex: current_idx => dispatch(slideIndex(current_idx)),
       strategyVisible: page_visible => dispatch(strategyVisible(page_visible)),
-      setStrategyPage: () => dispatch(setStrategyPage())
+      setStrategyPage: () => dispatch(setStrategyPage()),
+      prepareNext: () => dispatch(prepareNext())
     };
 }
 

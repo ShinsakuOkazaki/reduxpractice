@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Dropdown} from 'primereact/dropdown';
-import {editStatType} from "../actions/index";
+import {editSubmit} from "../actions/index";
 
 class DefaultStatUnit extends React.Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class DefaultStatUnit extends React.Component {
                 value={current_statistical_type} 
                 options={statistical_types} 
                 onChange={(e) => {
-                        this.props.editStatType({ statistical_type: e.target.value});
+                        this.props.editSubmit({ statistical_type: e.target.value});
                     }   
                 } 
                 placeholder="Select Statistical Type"
@@ -35,7 +35,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return { 
-      editStatType: (statistical_type) => dispatch(editStatType(statistical_type))
+      editSubmit: (statistical_type) => dispatch(editSubmit(statistical_type))
     };
 }
 
