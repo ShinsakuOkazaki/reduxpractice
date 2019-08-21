@@ -1,28 +1,58 @@
 import React from 'react';
 import {Dialog} from 'primereact/dialog';
-import {strategyVisible} from "../actions/index";
+import {strategyVisible, setPage, editSubmit, goToPage} from "../actions/index";
 import { connect } from "react-redux";
-import InputName from "./InputName.jsx";
+//import InputName from "./InputName.jsx";
 import VariableDropdown from './VariableDropdown.jsx';
-import OntologyDropdown from './OntologyDropdown.jsx';
+import {RadioButton} from 'primereact/radiobutton';
+import {Button} from 'primereact/button';
+//import OntologyDropdown from './OntologyDropdown.jsx';
 
 class DefualtStrategy extends React.Component {
     constructor(props) {
         super(props)
+        this.onHide = this.onHide.bind(this)
+        this.onChangeOther = this.onChangeOther.bind(this)
+        //this.onClick - this.onClick.bind(this)
     }
+
+    onHide() {
+        this.props.strategyVisible(false)
+        this.props.goToPage()
+    }
+    onChangeOther(e) {
+        this.props.setPage({page_type: e.value})
+        this.props.editSubmit({column_name: this.props.current_column})
+    }
+    // onClick() {
+    //     this.props.strategyVisible(false)
+    //     this.props.goToPage()
+    // }
+    
     render() {
-        const {strategy_page, column_name} = this.props;
+        const {strategy_page, current_column, page_type, submit_column } = this.props;
+        const footer = (
+            <Button label="Go to Edit" onClick={this.onHide} />
+        );
         return (
-
-            <Dialog header= "Search variable" visible={strategy_page} style={{width: '50vw'}} modal={true} onHide={() => this.props.strategyVisible(false)}>
-                <p>Variable Name</p>
-               <InputName/>
-               <p>Step 1: Search in suggested variable from SPINE</p>
-               <VariableDropdown/>
-               <p>Step 2: Search in Ontology</p>
-               <OntologyDropdown/>
-               <p>Step 3: Define by yourselves</p>
-
+            <Dialog header= "Search variable" visible={strategy_page} style={{width: '50vw'}} footer={footer} modal={true} onHide={this.onHide}>
+                <h3>{current_column}</h3>
+                <div className="p-grid" style={{width:'250px',marginBottom:'10px'}}>
+                    <div  className="p-col-12">
+                        <RadioButton inputId="rb1" name="page" value="variable" onChange={(e) => this.props.setPage({page_type: e.value})} checked={(page_type === 'variable' && submit_column !== "")} />    
+                        <label htmlFor="rb1" className="p-radiobutton-label">
+                            <VariableDropdown/>
+                        </label>
+                    </div>
+                    <div  className="p-col-12">
+                        <RadioButton inputId="rb2" name="page" value="ontology" onChange={this.onChangeOther} checked={page_type === 'ontology'} />
+                        <label htmlFor="rb2" className="p-radiobutton-label">Search for Ontology</label>    
+                    </div>
+                    <div  className="p-col-12">
+                        <RadioButton inputId="rb3" name="page" value="other" onChange={this.onChangeOther} checked={page_type === 'other'} /> 
+                        <label htmlFor="rb3" className="p-radiobutton-label">Define by yourselves</label>
+                    </div>
+                </div> 
             </Dialog>
         )
     }
@@ -31,13 +61,18 @@ class DefualtStrategy extends React.Component {
 const mapStateToProps = state => {
     return {
         strategy_page: state.strategy_page,
-        column_name: state.submit_variables[state.current_idx]['column_name']
+        current_column: state.columns[state.current_idx],
+        page_type: state.page_type,
+        submit_column: state.submit_variables[state.current_idx]["column_name"]
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return { 
-      strategyVisible: page_visible=> dispatch(strategyVisible(page_visible))
+      strategyVisible: page_visible=> dispatch(strategyVisible(page_visible)),
+      setPage: page_type => dispatch(setPage(page_type)),
+      editSubmit: column_name => dispatch(editSubmit(column_name)),
+      goToPage: () => dispatch(goToPage())
     };
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getData } from "../actions/index";
+import { uploadData } from "../actions/index";
 import {ProgressSpinner} from 'primereact/progressspinner';
 
 class Upload extends React.Component {
@@ -9,7 +9,7 @@ class Upload extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getData();
+        this.props.uploadData();
     }
 
     render() {
@@ -29,7 +29,15 @@ class Upload extends React.Component {
 
 const mapStateToProps = state => {
     return {loading: state.loading};
-  };
+};
+
+const mapDispatchToProps = dispatch => {
+    return { 
+        uploadData: key => dispatch(uploadData(key))
+    };
+}
 
 
-export default connect(mapStateToProps, {getData})(Upload);
+
+const  KeyUpload = connect(mapStateToProps, mapDispatchToProps)(Upload);
+export default KeyUpload;

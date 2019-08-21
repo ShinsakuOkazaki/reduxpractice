@@ -1,33 +1,17 @@
-import { 
-         EDIT_HEADER, 
-         COLUMN_MATCHING,
-         EDIT_DATATYPE} from "../constants/action-types";
+import {GO_TO_PAGE} from "../constants/action-types";
+import {getData } from "../actions/index.js"
 
-export function checkMatchMiddleware({ dispatch }) {
+export function checkMatchMiddleware({ dispatch, getState }) {
   return function(next){
     return function(action){
-      if (action.type === EDIT_HEADER) {
-        return dispatch( {type: COLUMN_MATCHING, payload: action.payload})
+      const {page_type, columns, current_idx} = getState();
+      if (action.type === GO_TO_PAGE && page_type === "ontology") {
+        const column = columns[current_idx]
+        console.log("in medleware:", column)
+        dispatch(getData(column))
       }
-      // if (action.type === EDIT_DATATYPE && action.payload === "multiple") {
-      //   return dispatch( {type: COLUMN_MATCHING, payload: action.payload})
-      // }
       return next(action);
     }
   }
 }
-
-// export function initialCheckMiddleware({ dispatch }) {
-//   return function(next){
-//     return function(action){
-//       if (action.type === INPUT_FILE) {
-//         const match = action.payload.columns.filter(key => 
-//           matchList.includes(key)
-//         );
-//         return dispatch( {type: MATCHED, payload: match})
-//       }
-//       return next(action);
-//     }
-//   }
-// }
 

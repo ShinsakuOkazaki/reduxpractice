@@ -1,6 +1,5 @@
 import { InputText } from 'primereact/inputtext';
 import React from "react";
-import { editName} from "../actions/index";
 import { connect } from "react-redux";
 
 
@@ -9,29 +8,20 @@ class Input extends React.Component {
         super(props);
     }
     render() {
-        
         return (
-                <InputText 
-                    className="select-big"
-                    value={this.props.column} 
-                    onChange = { (e) => 
-                        this.props.editName({column: e.target.value})} />
+            <div>{this.props.column}</div>
         )
     }
 }
 
 
 
-const mapDispatchToProps = dispatch => {
-    return { 
-      editName: column => dispatch(editName(column))
-    };
-}
+
 
 const mapStateToProps = state => {
-    return {column: state.submit_variables[state.current_idx]["column_name"]};
+    return {column: state.columns[state.current_idx]};
 }
 
 
-const InputName = connect(mapStateToProps, mapDispatchToProps)(Input);
+const InputName = connect(mapStateToProps)(Input);
 export default InputName;

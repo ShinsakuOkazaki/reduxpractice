@@ -16,6 +16,7 @@
     "react-table": "^6.10.0",
     "react-tooltip": "^3.10.0",
     "react-transition-group": "^4.2.1",
+    "string-similarity": "^3.0.0",
     "xlsx": "^0.14.4"
   },
   "devDependencies": {

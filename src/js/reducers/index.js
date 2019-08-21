@@ -9,7 +9,6 @@ import { INPUT_FILE,
 		 UPDATE_CURRENT,
 		 STORE_SUBMIT,
 		 EDIT_DATATYPE,
-		 EDIT_NAME,
 		 GOTO_INDEX,
 		 CHANGE_CHOICE,
 		 EDIT_STATTYPE,
@@ -20,8 +19,57 @@ import { INPUT_FILE,
 		 EDIT_UNIT,
 		 EDIT_SEARCH,
 		 STRATEGY_VISIBLE,
-		 UPLOAD_VISIBLE
+		 UPLOAD_VISIBLE,
+		 SET_STRATEGY_PAGE,
+		 EDIT_SUBMIT,
+		 SET_PAGE,
+		 GO_TO_PAGE,
+		 ONTOLOGY_LOADED,
+		 ONTOLOGY_STARTED
 		} from "../constants/action-types";
+import stringSimilarity from "string-similarity";
+
+function getSpineColumns(spine_variables) {
+	return spine_variables.map(x => x["column_name"])
+}
+
+function compareRating(a, b){
+	return b.rating - a.rating
+}
+
+function getSuggestedVariable(column, spine_variables) {
+	//console.log("check string:", column)
+	const spine_columns = getSpineColumns(spine_variables);
+	//console.log(spine_columns)
+	const suggested_variables = stringSimilarity.findBestMatch(column, spine_columns)["ratings"].sort(compareRating).map(x => x["target"]);
+	//console.log(suggested_variable)
+	//console.log("sucess")
+	return suggested_variables
+}
+
+const unique = (value, index, self) => {
+	return self.indexOf(value) === index;
+}
+
+function getMultipleChoice(spine_variables, column, data) {
+	spine_variables = Array.from(spine_variables)
+	console.log("spine_variables", spine_variables)
+	let spine_multiple = Object.assign({}, spine_variables.find(x => x.column_name === column))["multiple"];
+	let values = data.map(x => x[column]);
+	let submit_multiple = values.filter(unique);
+	let matched_multiple = submit_multiple.filter(x => spine_multiple.includes(x));
+	let diff_spine = spine_multiple.filter(x => !submit_multiple.includes(x));
+	let diff_submit = submit_multiple.filter(x => !spine_multiple.includes(x));
+	let empty_spine = new Array(diff_submit.length).fill("");
+	let empty_submit = new Array(diff_spine.length).fill("");
+	diff_spine = diff_spine.concat(empty_spine)
+	diff_submit = empty_submit.concat(diff_submit)
+	let temp_spine_multiple = matched_multiple.concat(diff_spine);
+	let temp_submit_multiple  = matched_multiple.concat(diff_submit);
+	let multiple = temp_spine_multiple.map((value, index) => ({spine: value, submit: temp_submit_multiple[index]}))
+	console.log("mutltiple:",multiple)
+	return multiple;
+}
 
 
 const initialState = {
@@ -53,28 +101,18 @@ const initialState = {
 		},
 
 	],
-	ontologies : [
+	submit_variables: [
 		{
-			column_name: "CLINICAL_DIASTOLIC_BLOOD_PRESSURE", 
-			description:"This variable represents subjects",
-			variable_type: "number",
-			statistical_type: "continuous",
-			sop: "brabra",
+			column_name: "", 
+			description:"",
+			variable_type: "",
+			statistical_type: "",
+			sop: "",
 			multiple: [],
 			visit_time: [],
-			location: [],
-			format: "mm" 
-		},
-		{
-			column_name: "CLINICAL_AMBULATORY_SYSTOLIC_BLOOD_PRESSURE_AWAKE", 
-			description:"This variable represents subjects",
-			variable_type: "number",
-			statistical_type: "continuous",
-			sop: "brabra",
-			multiple: [],
-			visit_time: [],
-			location: [],
-			format: "cm" 
+			location: [], 
+			variable_class: "",
+			format:""
 		}
 	],
 	variable_types: [
@@ -87,21 +125,6 @@ const initialState = {
 		{label: "Continuous", value: "continuous"},
 		{label: "Discrete", value: "discrete"}
 	],
-	submit_variables: [
-		{
-			column_name: "", 
-			description:"",
-			variable_type: "",
-			statistical_type: "",
-			sop: "",
-			multiple: [],
-			visit_time: [],
-			location: [], 
-			variable_class: "",
-			format:"",
-			search_by: "other"
-		}
-	],
 	search_option: [
 		{label: "Variable", value: "variable"},
 		{label: "Ontology", value: "ontology"},
@@ -113,83 +136,55 @@ const initialState = {
 		{label: "mm", value: "mm"},
 		{label:  "unit", value:  "unit"}
 	],
-	variable_option: [],
-	ontology_option: [],
+	variable_option:[
+		{label: "", value:""}
+	],
+	ontology_option :[],
 	strategy_page: false,
 	upload_page: true,
-	matching: false, 
-	key_col: [],
-	match: [],
+	page_type: "variable",
 	loading: false
 };
 
 function rootReducer(state = initialState, action) {
-	
+	//First action called when uploading data file.
+	//This action adds columns, data, and submit_varianles,
+	//which is a list of empty object.
 	if (action.type === INPUT_FILE) {
 		const {columns, data} = action.payload;
-		const {spine_variables, ontologies} = state;
-		const spine_columns = spine_variables.map(x => x['column_name']);
-		const ontology_names = ontologies.map(x =>  x['column_name']);
-		let variable_option = spine_columns.map(x => ({label: x, value: x}));
-		variable_option.push({label: "Cannot find suitable variable", value: ""})
-		let ontology_option = ontology_names.map(x => ({label: x, value: x}));
-		ontology_option.push({label: "Cannot find suitable ontology", value: ""})
 		let submit_variables = new Array(columns.length);
-		const unique = (value, index, self) => {
-			return self.indexOf(value) === index;
-		}
 		for (let i = 0; i < columns.length; i++) {
-			if (spine_columns.includes(columns[i])) {
-				let idx_variable = spine_columns.indexOf(columns[i]);
-				submit_variables[i] = Object.assign({}, spine_variables[idx_variable]);
-				if (submit_variables[i]["variable_type"] === "multiple"){
-					let spine_multiple = spine_variables[idx_variable]["multiple"];
-					let values = data.map(x => x[columns[i]]);
-					let submit_multiple = values.filter(unique);
-					let matched_multiple = submit_multiple.filter(x => spine_multiple.includes(x));
-					let diff_spine = spine_multiple.filter(x => !submit_multiple.includes(x));
-					let diff_submit = submit_multiple.filter(x => !spine_multiple.includes(x));
-					let empty_spine = new Array(diff_submit.length).fill("");
-					let empty_submit = new Array(diff_spine.length).fill("");
-					diff_spine = diff_spine.concat(empty_spine)
-        			diff_submit = empty_submit.concat(diff_submit)
-					let temp_spine_multiple = matched_multiple.concat(diff_spine);
-					let temp_submit_multiple  = matched_multiple.concat(diff_submit);
-					let multiple = temp_spine_multiple.map((value, index) => ({spine: value, submit: temp_submit_multiple[index]}))
-					console.log(multiple)
-					submit_variables[i]["multiple"] = multiple;
-				}
-				submit_variables[i]["search_by"] = "variable";
-			} 
-			else if (ontology_names.includes(columns[i])) {
-				let idx_ontology = ontology_names.indexOf(columns[i]);
-				submit_variables[i] = Object.assign({}, ontologies[idx_ontology]);
-				submit_variables[i]["search_by"] = "ontology";
-			}
-			else {
-				submit_variables[i] = {
-					column_name: columns[i], 
-					description: "",
-					variable_type: "",
-					statistical_type: "",
-					sop: "",
-					multiple: [],
-					visit_time: [],
-					location: [],
-					format: "",
-					search_by: "other"
-					};
-			}
+			submit_variables[i] = {}; 
 		}
 		return Object.assign({}, state, {
 			columns : columns,
 			data: data,
-			submit_variables: submit_variables,
-			variable_option: variable_option,
-			ontology_option: ontology_option
+			submit_variables: submit_variables
 		});
 	}
-	
+	if(action.type === STRATEGY_VISIBLE) {
+		return Object.assign({}, state, {
+			strategy_page: action.payload
+		})
+	}
+	if(action.type === SET_STRATEGY_PAGE) {
+		const {columns, current_idx, spine_variables} = state;
+		const suggested_variables = getSuggestedVariable(columns[current_idx], spine_variables)
+		console.log("suggested_variable", suggested_variables)
+		let variable_option = suggested_variables.map(x => ({label:x, value:x}));
+		variable_option.push({label:"Cannot Find", value: ""});
+		console.log("variable_option:", variable_option)
+		return Object.assign({}, state, {
+			variable_option: variable_option
+		})
+	}
+
+	if(action.type === UPLOAD_VISIBLE) {
+		console.log("uploadVisible is called:", action.payload)
+		return Object.assign({}, state, {
+			upload_page: action.payload
+		})
+	}
 	if (action.type === EDIT_CELL) {
 		return Object.assign({}, state, {
 			data: action.payload
@@ -205,19 +200,82 @@ function rootReducer(state = initialState, action) {
 			submit_variables: submit_variables
 		})
 	}
-	if (action.type === EDIT_NAME) {
-		const {column} = action.payload;
-		let {submit_variables, current_idx, columns} = state;
-		submit_variables[current_idx]['column_name'] = column;
-		columns[current_idx] = column;
+	if (action.type === EDIT_SUBMIT) {
+		console.log("submit payload:", action.payload)
+		let {submit_variables, current_idx} = state
+		submit_variables[current_idx] = Object.assign({}, submit_variables[current_idx], action.payload)
+		
+	}
+	if (action.type === SET_PAGE) {
 		return Object.assign({}, state, {
-			columns: columns,
+			page_type: action.payload.page_type
+		})
+	}
+	//action to move from strategy page to either variable, ontology, or other page
+	if (action.type === GO_TO_PAGE) {
+		let {spine_variables, page_type, submit_variables, current_idx, data} = state;
+		//get column name of current index of submit_variable 
+		const submit_column = submit_variables[current_idx]["column_name"]
+		//if page_type is "variable", copy the spine_variable to submit_variable
+		let submit_variable = {}
+		if (page_type === "variable") {
+			submit_variable = Object.assign({}, spine_variables.find(x => x.column_name === submit_column))
+			console.log("submit_variable:", submit_variable)
+			//if multiple, create multiple field
+			if (submit_variable['multiple'].length !== 0) {
+				const multiple = getMultipleChoice(spine_variables, submit_column, data)
+				submit_variable['multiple'] = multiple
+			} 
+		}
+		//if page_type is "other", create empty field other than column_name
+		else if (page_type === "other") {
+			submit_variable = {
+				column_name: submit_column, 
+				description:"",
+				variable_type: "",
+				statistical_type: "",
+				sop: "",
+				multiple: [],
+				visit_time: [],
+				location: [], 
+				variable_class: "",
+				format:""
+			} ;
+		} else if (page_type === "ontology") {
+			submit_variable = {
+				column_name: submit_column, 
+				description:""
+			}
+		}
+		submit_variables[current_idx] = submit_variable;
+		return Object.assign({}, state, {
 			submit_variables: submit_variables
 		})
 	}
 	if (action.type === DATA_LOADED) {
 		return Object.assign({}, state, {
-			key_col: state.key_col.concat(action.payload),
+			loading: !state.loading
+		})
+	}
+	if (action.type === LOAD_STARTED) {
+		const {ontology} = action.payload
+		return Object.assign({}, state, {
+			ontology_option: ontology,
+			loading: !state.loading
+		})
+	}
+	if (action.type === ONTOLOGY_LOADED) {
+		const {ontology} = action.payload;
+		const {ontology_option} = state
+		console.log("ontology", ontology)
+		console.log("ontology_option", ontology_option)
+		return Object.assign({}, state, {
+			ontology_option: [...ontology_option, ontology],
+			loading: !state.loading
+		})
+	}
+	if (action.type === ONTOLOGY_STARTED) {
+		return Object.assign({}, state, {
 			loading: !state.loading
 		})
 	}
@@ -327,18 +385,6 @@ function rootReducer(state = initialState, action) {
 			submit_variables: submit_variables
 		})
 	}
-	if(action.type === STRATEGY_VISIBLE) {
-		return Object.assign({}, state, {
-			strategy_page: action.payload
-		})
-	}
-	if(action.type === UPLOAD_VISIBLE) {
-		return Object.assign({}, state, {
-			upload_page: action.payload
-		})
-	}
-	
-
 	
   	return state;
 };

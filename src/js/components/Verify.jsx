@@ -1,23 +1,25 @@
 import {Button} from 'primereact/button';
 import React from "react";
-import {slideIndex} from "../actions/index"
+import {slideIndex, strategyVisible, setStrategyPage} from "../actions/index"
 import { connect } from "react-redux";
-import {strategyVisible} from "../actions/index"
+
 
 class DefaultButton extends React.Component {
     constructor(props) {
         super(props);
+        this.onClick = this.onClick.bind(this)
     }
-    render() {
+    onClick() {
         const {current_idx} = this.props
+        const next_idx = current_idx + 1; 
+        this.props.slideIndex(next_idx);
+        this.props.setStrategyPage()
+        this.props.strategyVisible(true);
+    }
+
+    render() {
         return (
-            <Button label="Verify" onClick = { ()=>{
-                    const next_idx = current_idx + 1;
-                    this.props.slideIndex(next_idx);
-                    this.props.strategyVisible(true)
-                }   
-            } 
-            />
+            <Button label="Verify" onClick = {this.onClick}/>
         )
     }
 }
@@ -28,7 +30,8 @@ class DefaultButton extends React.Component {
 const mapDispatchToProps = dispatch => {
     return { 
       slideIndex: current_idx => dispatch(slideIndex(current_idx)),
-      strategyVisible: page_visible => dispatch(strategyVisible(page_visible))
+      strategyVisible: page_visible => dispatch(strategyVisible(page_visible)),
+      setStrategyPage: () => dispatch(setStrategyPage())
     };
 }
 

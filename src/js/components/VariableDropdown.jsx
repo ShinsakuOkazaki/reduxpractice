@@ -1,22 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Dropdown} from 'primereact/dropdown';
-import {editName} from "../actions/index";
+import {editSubmit} from "../actions/index";
 
 class DefaultDropdown extends React.Component {
     constructor(props) {
         super(props);
     }
     render() {
-        const {column_name, variable_option} = this.props;
-        
+        const {variable_option, submit_column} = this.props;
         return (
             <Dropdown
-                className="select-big"               
-                value={column_name} 
+                className="select-big"          
+                value={submit_column} 
                 options={variable_option} 
                 onChange={(e) => {
-                        this.props.editName({ column: e.target.value});
+                        this.props.editSubmit({column_name: e.target.value});
                     }   
                 } 
                 placeholder="Select Variable"
@@ -28,14 +27,15 @@ class DefaultDropdown extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        column_name: state.submit_variables[state.current_idx]['column_name'],
-        variable_option: state.variable_option
+        variable_option: state.variable_option,
+        current_column: state.columns[state.current_idx],
+        submit_column: state.submit_variables[state.current_idx]["column_name"]
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return { 
-        editName: (column) => dispatch(editName(column))
+        editSubmit: (column) => dispatch(editSubmit(column))
     };
 }
 

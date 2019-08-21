@@ -8,7 +8,6 @@ import { INPUT_FILE,
          UPDATE_CURRENT,
          STORE_SUBMIT,
          EDIT_DATATYPE,
-         EDIT_NAME,
          GOTO_INDEX,
          CHANGE_CHOICE,
          EDIT_STATTYPE,
@@ -19,7 +18,15 @@ import { INPUT_FILE,
          EDIT_UNIT,
          EDIT_SEARCH,
          STRATEGY_VISIBLE,
-         UPLOAD_VISIBLE
+         SET_STRATEGY_PAGE,
+         UPLOAD_VISIBLE,
+         UPLOAD_DATA,
+         LOAD_ONTOLOGY,
+         EDIT_SUBMIT,
+         SET_PAGE,
+         GO_TO_PAGE,
+         ONTOLOGY_STARTED,
+         ONTOLOGY_LOADED
         } from "../constants/action-types";
 
 
@@ -33,14 +40,6 @@ export function editCell(payload){
 
 export function editHeader(payload) {
   return { type: EDIT_HEADER, payload }
-}
-
-export function loadStarted() {
-  return { type: LOAD_STARTED }
-}
-
-export function dataLoaded(payload) {
-  return { type: DATA_LOADED, payload }
 }
 
 export function slideIndex(payload) {
@@ -60,10 +59,6 @@ export function storeSubmit(payload) {
 }
 export function editDatatype(payload) {
   return { type: EDIT_DATATYPE, payload }
-}
-
-export function editName(payload) {
-  return { type: EDIT_NAME, payload }
 }
 export function gotoIndex(payload) {
   return { type: GOTO_INDEX, payload }
@@ -98,19 +93,87 @@ export function editSearch(payload) {
 export function strategyVisible(payload) {
   return { type: STRATEGY_VISIBLE, payload }
 }
+export function setStrategyPage() {
+  return { type: SET_STRATEGY_PAGE}
+}
+
 export function uploadVisible(payload) {
   return { type: UPLOAD_VISIBLE, payload }
 }
 
-export function getData() {
+export function loadStarted(payload) {
+  return { type: LOAD_STARTED, payload }
+}
+
+export function dataLoaded(payload) {
+  return { type: DATA_LOADED, payload }
+}
+
+export function uploadData() {
+  return { type: UPLOAD_DATA}
+}
+
+export function loadOntology() {
+  return {type: LOAD_ONTOLOGY}
+}
+
+export function editSubmit(payload) {
+  return {type: EDIT_SUBMIT, payload}
+}
+
+export function setPage(payload) {
+  return {type: SET_PAGE, payload}
+}
+export function goToPage() {
+  return {type: GO_TO_PAGE}
+}
+export function ontologyStarted() {
+  return {type: ONTOLOGY_STARTED}
+}
+export function ontologyLoaded(payload) {
+  return {type: ONTOLOGY_LOADED, payload}
+}
+
+
+
+
+export function getData(column) {
   return function(dispatch) {
-    dispatch(loadStarted())
-    return fetch("https://virtserver.swaggerhub.com/gregblt/SPINE_clinical_variable/1.0.0/clinical-variable")
-    .then(response => response.json())
-    .then(json => {
-      dispatch(dataLoaded(json));
-    });
+    dispatch(loadStarted({ontology:[]}))
+    const url = "http://data.bioontology.org/search?q=" + column + "&suggest=true";
+    return fetch( url, 
+                {
+                  headers: {'Authorization': 'apikey token=67b7e570-22e9-4759-b747-da6cb8703580'}
+                })
+    .then(
+      response => response.json(), 
+      error => console.log("An error occired.", error)
+    )
+    .then(
+      function(json) {
+        const ontology_ids = json["collection"].map(x => x["links"]["ontology"]);
+        for (let i = 0; i < ontology_ids.length; i++) {
+          dispatch(getOntology(ontology_ids[i]))
+        }
+      }
+    )
   }
 }
 
-// "https://jsonplaceholder.typicode.com/posts"
+export function getOntology(ontology_id) {
+  return function(dispatch) {
+    dispatch(ontologyStarted())
+    console.log(ontology_id)
+    return fetch( ontology_id, 
+                {
+                  headers: {'Authorization': 'apikey token=67b7e570-22e9-4759-b747-da6cb8703580'}
+                })
+    .then(
+      response => response.json(), 
+      error => console.log("An error occired.", error)
+    )
+    .then((json) => {
+      dispatch(ontologyLoaded({ontology:json["name"]}));
+    });
+  }
+}
