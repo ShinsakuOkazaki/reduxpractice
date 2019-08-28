@@ -8,8 +8,8 @@ class DefaultList extends React.Component {
         super(props);
     }
     render() {
-        const {current_ontology, ontology_option, class_name} = this.props
-        const option = ontology_option.map((x, i) => ({label: class_name[i] + " -- " + x, value: class_name[i]+ " -- " + x}))
+        const {current_ontology, ontology_names, class_names} = this.props
+        const option = ontology_names.map((x, i) => ({label: class_names[i] + " -- " + x, value: class_names[i]+ " -- " + x}))
         if (option.length === 0) {
             return (
                 <div>
@@ -25,9 +25,9 @@ class DefaultList extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        ontology_option: state.ontology_option,
+        ontology_names: state.ontology_names,
         current_ontology : state.submit_variables[state.current_idx]["ontology_name"],
-        class_name : state.class_name
+        class_names : state.class_names
     };
 }
 

@@ -15,12 +15,10 @@ class DefaultLocation extends React.Component {
         const {columns, location} = this.props;
         const options = columns.map(x => ({label: x, value: x}));
         return (
-            // <ScrollPanel style={{width: '100%', height: '200px'}}>
             <div style={{height: '200px'}}>
                 <p>Associated Location</p>
                 <MultiSelect value={location} options={options} onChange={this.handleChange} />
             </div>
-            // </ScrollPanel>   
         )
     }
 }

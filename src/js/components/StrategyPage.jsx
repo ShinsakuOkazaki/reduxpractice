@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import VariableDropdown from './VariableDropdown.jsx';
 import {RadioButton} from 'primereact/radiobutton';
 import {Button} from 'primereact/button';
+import {Fieldset} from 'primereact/fieldset';
+
 //import OntologyDropdown from './OntologyDropdown.jsx';
 
 class DefualtStrategy extends React.Component {
@@ -30,30 +32,34 @@ class DefualtStrategy extends React.Component {
     // }
     
     render() {
-        const {strategy_page, current_column, page_type, submit_column } = this.props;
+        const {strategy_page, current_column, page_type, submit_column , submit_description} = this.props;
         const footer = (
             <Button label="Go to Edit" onClick={this.onHide} />
         );
         return (
-            <Dialog header= "Search variable" visible={strategy_page} style={{width: '50vw'}} footer={footer} modal={true} onHide={this.onHide}>
-                <h3>{current_column}</h3>
-                <div className="p-grid" style={{width:'250px',marginBottom:'10px'}}>
-                    <div  className="p-col-12">
-                        <RadioButton inputId="rb1" name="page" value="variable" onChange={(e) => this.props.setPage({page_type: e.value})} checked={(page_type === 'variable' && submit_column !== "")} />    
-                        <label htmlFor="rb1" className="p-radiobutton-label">
-                            <VariableDropdown/>
-                        </label>
-                    </div>
-                    <div  className="p-col-12">
-                        <RadioButton inputId="rb2" name="page" value="ontology" onChange={this.onChangeOther} checked={page_type === 'ontology'} />
-                        <label htmlFor="rb2" className="p-radiobutton-label">Search for Ontology</label>    
-                    </div>
-                    <div  className="p-col-12">
-                        <RadioButton inputId="rb3" name="page" value="other" onChange={this.onChangeOther} checked={page_type === 'other'} /> 
-                        <label htmlFor="rb3" className="p-radiobutton-label">Define by yourselves</label>
-                    </div>
-                </div> 
-            </Dialog>
+            <div>
+                <Dialog header= "Search variable" visible={strategy_page} style={{width: '50vw'}} footer={footer} modal={true} onHide={this.onHide}>
+                    <h3>{current_column}</h3>
+                    <div className="p-grid" style={{width:'250px',marginBottom:'10px'}}>
+                        <div  className="p-col-12">
+                            <RadioButton inputId="rb1" name="page" value="variable" onChange={(e) => this.props.setPage({page_type: e.value})} checked={(page_type === 'variable' && submit_column !== "")} />    
+                            <label htmlFor="rb1" className="p-radiobutton-label">
+                                <VariableDropdown/>
+                            </label>
+                        </div>
+                        <div  className="p-col-12">
+                            <RadioButton inputId="rb2" name="page" value="ontology" onChange={this.onChangeOther} checked={page_type === 'ontology'} />
+                            <label htmlFor="rb2" className="p-radiobutton-label">Search for Ontology</label>    
+                        </div>
+                        <div  className="p-col-12">
+                            <RadioButton inputId="rb3" name="page" value="other" onChange={this.onChangeOther} checked={page_type === 'other'} /> 
+                            <label htmlFor="rb3" className="p-radiobutton-label">Define by yourselves</label>
+                        </div>
+                    </div> 
+                    <Fieldset legend="Description">{submit_description}</Fieldset>
+                </Dialog>
+            </div>
+            
         )
     }
 }
@@ -63,7 +69,8 @@ const mapStateToProps = state => {
         strategy_page: state.strategy_page,
         current_column: state.columns[state.current_idx],
         page_type: state.page_type,
-        submit_column: state.submit_variables[state.current_idx]["column_name"]
+        submit_column: state.submit_variables[state.current_idx]["column_name"],
+        submit_description: state.submit_variables[state.current_idx]["description"]
     };
 }
 
