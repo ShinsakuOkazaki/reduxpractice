@@ -4,7 +4,7 @@ import OntologySearch from './OntologySearch.jsx';
 import OntologyList from './OntologyList.jsx';
 import VerifyButton from "./Verify.jsx";
 import {ProgressSpinner} from 'primereact/progressspinner';
-import GoToColumn from "./GoToColumn.jsx";
+import ProgressPanel from "./ProgressPanel.jsx"
 
 
 class DefaultPage extends React.Component {
@@ -14,16 +14,26 @@ class DefaultPage extends React.Component {
 
     render() {
         return (
-            <div>
-                <h3>{this.props.current_variable}</h3>
-                <OntologySearch/>
-                {this.props.loading ? (
-                     <ProgressSpinner/>
-                ):(
-                    <OntologyList/>
-                )}
-                <GoToColumn/>
-                <VerifyButton/>
+            <div className="w3-row">
+                <div className="w3-margin">
+                        <h3>{this.props.submit_column}</h3>
+                </div>
+                <div className="w3-col l3">
+                    <ProgressPanel/>
+                </div>
+                <div className="w3-col l6">
+                    <h3>{this.props.current_variable}</h3>
+                    <OntologySearch/>
+                    {this.props.loading ? (
+                        <ProgressSpinner/>
+                    ):(
+                        <OntologyList className="ontology-list"/>
+                    )}
+                </div>
+                <div className="w3-col l3">
+                    {/* <GoToColumn/> */}
+                    <VerifyButton/>
+                </div>
             </div>
         )
     }
@@ -32,8 +42,8 @@ class DefaultPage extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        ontology_option: state.ontology_option,
-        current_variable : state.submit_variables[state.current_idx]["column_name"]
+        loading: state.loading,
+        submit_column: state.submit_variables[state.current_idx]["column_name"]
     };
 }
 

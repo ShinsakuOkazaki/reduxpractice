@@ -12,7 +12,7 @@ body {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  font-family: $text-font-stack;
+  font-family: text-font-stack;
   font-weight: normal;
   color: #6b6b6b;
   -webkit-font-smoothing: antialiased;
@@ -58,6 +58,6 @@ body {
 }
 
 h1{
-  color: $battleship-grey;
+  color: battleship-grey;
 }
 

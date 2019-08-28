@@ -98,7 +98,8 @@ export function getOntologyId(payload) {
   return {type: GET_ONTOLOGY_ID, payload}
 }
 
-
+// function to get ontology api
+// api is nested so that we have to call multiple api at the same time
 export function getData(search) {
   return function(dispatch) {
     dispatch(loadStarted())
@@ -128,12 +129,12 @@ export function getData(search) {
               dispatch(getOntologyName({ontology_names: ontology_names}))
             }
           ).then(function (error) {
-            console.log("An error occired.", error)
+            console.log(error)
           })
       }      
       ).then(
         function (error) {
-          console.log("An error occired.", error)
+          console.log(error)
       }
       )
       dispatch(dataLoaded())

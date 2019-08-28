@@ -8,6 +8,7 @@ import AssociatedVisit from "./AssociatedVisit.jsx";
 import AssociatedLocation from "./AssociatedLocation.jsx";
 import VerifyButton from "./Verify.jsx";
 import GoToColumn from "./GoToColumn.jsx";
+import ProgressPanel from "./ProgressPanel.jsx"
 
 
 class DefaultPage extends React.Component {
@@ -16,19 +17,24 @@ class DefaultPage extends React.Component {
     }
     render() {
         return(
-            <div>
-                <div className="column-left">
+            <div className="w3-row">
+                <div className="w3-col l3">
                     <div className="w3-margin">
-                    <h3>{this.props.submit_column}</h3>
+                        <h3>{this.props.submit_column}</h3>
                     </div>
+                    <div className="w3-margin">
+                        <ProgressPanel/>
+                    </div>
+                </div>
+                <div className="w3-col l3">
                     <div className="data-type">
-                    <TypeDropdown/>
+                        <TypeDropdown/>
                     </div>
                     <div className="w3-margin">
                     <Switching/>
                     </div>
                 </div> 
-                <div className="column-middle">
+                <div className="w3-col l3">
                     <div className="w3-margin">
                     <Descriotion/>
                     </div>
@@ -36,15 +42,12 @@ class DefaultPage extends React.Component {
                     <SOP/>
                     </div>
                 </div>
-                <div className="column-right">
+                <div className="w3-col l3">
                     <div className="w3-margin">
                     <AssociatedVisit/>
                     </div>
                     <div className="w3-margin">  
                     <AssociatedLocation/>
-                    </div>
-                    <div className="w3-margin">   
-                    <GoToColumn/>
                     </div>
                     <div className="varify"> 
                     <VerifyButton/>

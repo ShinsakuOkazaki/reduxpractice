@@ -22,9 +22,13 @@ import {getSuggestedVariable, getMultipleChoice} from "../middleware/index.js"
 
 // initialState 
 const initialState = {
- 	columns: [], // columns; an array of column names user's uploaded file
-	data: [], // data: an array of object. Each object corresponding to each row of user's file
+	 
+	columns: [], // columns; an array of column names user's uploaded file
+	
+	 data: [], // data: an array of object. Each object corresponding to each row of user's file
+	
 	current_idx: 0, // current index of variable dealt with currently
+	
 	spine_variables: [ // spline_variables: array of object of variable in spine
 		{				// currently we have example of variables inside
 			column_name: "Subject", 
@@ -50,6 +54,7 @@ const initialState = {
 		},
 
 	],
+
 	submit_variables: [ // submit_variables: array of object of variable to submit
 		{
 			column_name: "", 
@@ -64,6 +69,7 @@ const initialState = {
 			format:""
 		}
 	],
+
 	variable_types: [ // variable_types: array of object of variable_type used for dropdown
 						// this can be moved to local state of DataType depending on api
 		{label: "Number", value: "number"},
@@ -71,11 +77,13 @@ const initialState = {
 		{label: "Date", value: "date"},
 		{label: "Text", value: "text"}
 	], 
+
 	statistical_types: [ // statistical_types: array of object of statistical_type used for dropdown 
 						// this can be moved to local state of StatUnit depending on api
 		{label: "Continuous", value: "continuous"},
 		{label: "Discrete", value: "discrete"}
 	],
+
 	formats: [ // formats: array of objects of format of choice
 				// this can be moved to local state of UnitDropdown depending on api
 		{label: "MM/DD/YY", value: "mm/dd/yy"},
@@ -83,9 +91,11 @@ const initialState = {
 		{label: "mm", value: "mm"},
 		{label:  "unit", value:  "unit"}
 	],
+
 	variable_option:[ // variable_option: array of objects of variable option used for VariableDropdown
 		{label: "", value:""}
 	],
+
 	ontology_names :[], // ontology_names: list of ontology names gotten from api
 
 	class_names: [], // class_names: list of ontology names gotten from api
@@ -129,6 +139,7 @@ function rootReducer(state = initialState, action) {
 
 	// action to set visibility of strategy page
 	if(action.type === STRATEGY_VISIBLE) {
+		console.log("strategy visible:", action.payload)
 		return Object.assign({}, state, {
 			strategy_page: action.payload
 		})

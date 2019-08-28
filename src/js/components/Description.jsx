@@ -15,7 +15,7 @@ class DefaultDescription extends React.Component{
                 <p>Discription</p>
                 <InputTextarea 
                     rows={10} 
-                    cols={50} 
+                    cols={40} 
                     value={description} 
                     onChange={(e) => this.props.editSubmit({description:e.target.value})} 
                     tooltip="Iuput description of this variable.

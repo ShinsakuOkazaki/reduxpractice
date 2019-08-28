@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import {ListBox} from 'primereact/listbox';
 import {editSubmit} from "../actions/index";
+import {ScrollPanel} from 'primereact/scrollpanel';
 
 class DefaultList extends React.Component {
     constructor(props) {
@@ -19,7 +20,9 @@ class DefaultList extends React.Component {
             )
         }
         return (
-            <ListBox value={current_ontology} options={option} onChange={(e) => this.props.editSubmit({ontology_name: e.value})} style={{width:"50%"}} />
+            <ScrollPanel style={{width: '100%', height: '500px'}}>
+                <ListBox value={current_ontology} options={option} onChange={(e) => this.props.editSubmit({ontology_name: e.value})} style={{width:"100%"}} />
+            </ScrollPanel>
         )
     }
 }

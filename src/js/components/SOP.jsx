@@ -13,7 +13,7 @@ class DefaultSOP extends React.Component{
         return (
             <div>
                 <p>Standard Operating Procedure</p>
-                <InputTextarea rows={10} cols={50} value={sop} onChange={(e) => this.props.editSubmit({sop: e.target.value})} />
+                <InputTextarea rows={10} cols={40} value={sop} onChange={(e) => this.props.editSubmit({sop: e.target.value})} />
             </div>
         )
     }
