@@ -15,16 +15,12 @@ class EditableHeader extends React.Component {
       const {columns,headerKey,headerId} = this.props;
       return (
         <div>
-            {/* <div>
-              < Match headerKey={headerKey} headerId={headerId} />
-            </div> */}
             <div data-tip data-for={headerId.toString()}>
               <div
                 suppressContentEditableWarning ={true}
                 onClick={e => {
-                  //columns[headerId] = e.target.innerHTML;
+                  
                   this.props.gotoIndex(headerId);
-                  // this.props.editHeader({column: e.target.innerHTML});
                 }}
                 dangerouslySetInnerHTML={{
                   __html: columns[headerId]

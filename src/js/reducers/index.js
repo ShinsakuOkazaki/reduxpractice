@@ -15,7 +15,8 @@ import { INPUT_FILE,
 		 GET_CLASS_NAME,
 		 PREPARE_NEXT,
 		 ADD_ASSOCIATE, 
-		 GET_ONTOLOGY_NAME
+		 GET_ONTOLOGY_NAME,
+		 GET_ONTOLOGY_ID
 		} from "../constants/action-types";
 import {getSuggestedVariable, getMultipleChoice} from "../middleware/index.js"
 
@@ -88,6 +89,12 @@ const initialState = {
 	ontology_names :[], // ontology_names: list of ontology names gotten from api
 
 	class_names: [], // class_names: list of ontology names gotten from api
+
+	ontology_ids: [], 
+
+	class_ids: [],
+
+	class_definitions: [],
 
 	strategy_page: false, // strategy_page: flag for display strategy page
 
@@ -241,15 +248,19 @@ function rootReducer(state = initialState, action) {
 			ontology_names: [],
 			class_names: [],
 			ontology_names: [],
+			ontology_ids: [],
 			loading: !state.loading
 		})
 	}
 
 	// action called when class is loaded from api
 	if (action.type === GET_CLASS_NAME) {
-		const {class_names} = action.payload
+		const {class_names, ontology_ids, class_ids, class_definitions} = action.payload
 		return Object.assign({}, state, {
-			class_names: class_names
+			class_names: class_names,
+			ontology_ids: ontology_ids,
+			class_ids: class_ids,
+			class_definitions: class_definitions
 		})
 	}
 
@@ -258,6 +269,13 @@ function rootReducer(state = initialState, action) {
 		const {ontology_names} = action.payload
 		return Object.assign({}, state, {
 			ontology_names: ontology_names
+		})
+	}
+	// action called when ontology is loaded from api 
+	if (action.type === GET_ONTOLOGY_ID) {
+		const {ontology_ids} = action.payload
+		return Object.assign({}, state, {
+			ontology_names: ontology_ids
 		})
 	}
 	

@@ -16,7 +16,8 @@ import {
   GET_CLASS_NAME,
   PREPARE_NEXT,
   ADD_ASSOCIATE, 
-  GET_ONTOLOGY_NAME
+  GET_ONTOLOGY_NAME, 
+  GET_ONTOLOGY_ID
         } from "../constants/action-types";
 
 const axios = require('axios');
@@ -93,6 +94,9 @@ export function addAssociate(payload) {
   return {type: ADD_ASSOCIATE, payload}
 }
 
+export function getOntologyId(payload) {
+  return {type: GET_ONTOLOGY_ID, payload}
+}
 
 
 export function getData(search) {
@@ -108,14 +112,16 @@ export function getData(search) {
           
           const classes = response["data"]
           let ontology_ids = classes["collection"].map(x => x["links"]["ontology"]);
-          console.log("ontology_ids:",ontology_ids)
+          //dispatch(getOntologyId({ontology_ids: ontology_ids}))
           const class_names = classes["collection"].map(x => x["prefLabel"])
-          dispatch(getClassName({class_names: class_names}))
+          const class_ids = classes["collection"].map(x => x["@id"])
+          const class_definitions = classes["collection"].map(x => x["definition"])
+          dispatch(getClassName({class_names, ontology_ids, class_ids, class_definitions}))
           ontology_ids = ontology_ids.map(x => axios.get(x, {
             headers: {'Authorization': 'apikey token=67b7e570-22e9-4759-b747-da6cb8703580'}
           }))
           console.log("ontolgy_ids: ",ontology_ids)
-          axios.all(ontology_ids
+          axios.all(ontology_ids, 
           ).then(function (response) {
               const ontologies = response.map(x => x["data"])
               const ontology_names = ontologies.map(x=>x["name"])
