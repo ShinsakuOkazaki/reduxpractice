@@ -10,9 +10,6 @@ import PageSwitching from "./PageSwitching.jsx";
 
 const App = () => (
   <div>
-    {/* <div>
-      <KeyUpload />
-    </div> */}
     <div><UploadPage/></div>
     <div><StrategyPage/></div>
     <div><PageSwitching/></div>
