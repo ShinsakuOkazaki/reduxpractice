@@ -1,3 +1,6 @@
+// This component sets set setPage of state so that PageSwitching Component
+// can know what kind of page it should display for next operation
+
 import React from 'react';
 import {Dialog} from 'primereact/dialog';
 import {strategyVisible, setPage, editSubmit, goToPage} from "../actions/index";

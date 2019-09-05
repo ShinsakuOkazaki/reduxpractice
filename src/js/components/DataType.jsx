@@ -1,3 +1,4 @@
+// Dropdown for selecting variable type
 import React from 'react';
 import { connect } from 'react-redux';
 import { editSubmit } from "../actions/index";

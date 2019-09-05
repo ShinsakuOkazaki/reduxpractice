@@ -1,3 +1,5 @@
+// component to select assiciated location
+// user can select multiple location associated with current variable
 import React from "react";
 import { connect } from "react-redux";
 import {addAssociate} from "../actions/index";

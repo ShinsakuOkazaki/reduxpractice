@@ -1,3 +1,6 @@
+// Component to edit multiple choice 
+// This component will be shown only when current variable type is multiple
+
 import React from "react";
 import { connect } from "react-redux";
 import MatchedChoice from "./MatchedChoice.jsx";

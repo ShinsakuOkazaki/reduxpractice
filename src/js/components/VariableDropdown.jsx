@@ -1,3 +1,4 @@
+// Dropdown for variable in SPINE used on StrategyPage Component
 import React from 'react';
 import { connect } from 'react-redux';
 import {Dropdown} from 'primereact/dropdown';

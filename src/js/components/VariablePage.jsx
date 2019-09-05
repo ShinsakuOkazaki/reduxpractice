@@ -1,3 +1,4 @@
+// Page component for variable edit operation
 import React from 'react';
 import { connect } from "react-redux";
 import TypeDropdown from "./DataType.jsx";
@@ -7,7 +8,7 @@ import SOP from "./SOP.jsx";
 import AssociatedVisit from "./AssociatedVisit.jsx";
 import AssociatedLocation from "./AssociatedLocation.jsx";
 import VerifyButton from "./Verify.jsx";
-import GoToColumn from "./GoToColumn.jsx";
+
 import ProgressPanel from "./ProgressPanel.jsx"
 
 

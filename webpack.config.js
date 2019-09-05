@@ -40,15 +40,6 @@ module.exports = {
             "sass-loader" // compiles Sass to CSS, using Node Sass by default
         ]
        },
-      // {
-      //   test: /\.(s*)css$/,
-      //   use: [ {loader:'style-loader'},
-      //          {
-      //            loader: 'css-loader',
-      //          },
-      //          {loader:'sass-loader'}
-      //   ]
-      // },
     ]
   },
   plugins: [

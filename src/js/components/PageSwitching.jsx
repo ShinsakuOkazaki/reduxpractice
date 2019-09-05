@@ -1,3 +1,7 @@
+// This component switchs next operation according to user choince
+// If user selects variable, this sets next page VariablePage.
+// If user selects ontology, this sets next page OntologyPage.header
+
 import React from "react";
 import { connect } from "react-redux";
 import VariablePage from "./VariablePage.jsx";

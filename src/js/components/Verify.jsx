@@ -1,3 +1,5 @@
+// This component verifies edition of currenct variable.
+// and slide index to next and proceed to edit next variable.
 import {Button} from 'primereact/button';
 import React from "react";
 import {slideIndex, strategyVisible, setStrategyPage,prepareNext} from "../actions/index"

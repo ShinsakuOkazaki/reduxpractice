@@ -1,3 +1,4 @@
+// Component to show list of ontology pulled from api 
 import React from 'react';
 import { connect } from "react-redux";
 import {ListBox} from 'primereact/listbox';

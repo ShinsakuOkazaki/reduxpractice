@@ -1,3 +1,6 @@
+// This component shows progress of operations.
+// If you click one of the variable blocks, it leads you to operation for the variable
+
 import React from "react";
 import { connect } from "react-redux";
 import {slideIndex, setStrategyPage, strategyVisible, prepareNext} from "../actions/index.js"

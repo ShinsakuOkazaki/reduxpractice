@@ -1,3 +1,5 @@
+// component to select assiciated visit time
+// user can select multiple visit time associated with current variable
 import React from "react";
 import { connect } from "react-redux";
 import {addAssociate} from "../actions/index";

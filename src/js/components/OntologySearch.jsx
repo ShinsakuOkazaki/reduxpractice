@@ -1,3 +1,4 @@
+// Search ontology based on searching term using api
 import React from 'react';
 import { connect } from "react-redux";
 import {setSearch} from "../actions/index";

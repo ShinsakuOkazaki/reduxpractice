@@ -1,3 +1,4 @@
+// This component will show dropdown of statistical_type
 import React from 'react';
 import { connect } from 'react-redux';
 import {Dropdown} from 'primereact/dropdown';

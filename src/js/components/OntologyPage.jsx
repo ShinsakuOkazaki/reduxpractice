@@ -1,3 +1,5 @@
+// Page component to operate edition of ontology
+// User will search ontology on this component
 import React from 'react';
 import { connect } from "react-redux";
 import OntologySearch from './OntologySearch.jsx';

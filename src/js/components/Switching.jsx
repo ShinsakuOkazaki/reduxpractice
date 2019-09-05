@@ -1,3 +1,6 @@
+// This component switch display of component based on variable type of current working variable
+// If the type is multiple, this will show MultipleChoice component
+// Otherwise, this will show UnitDropDown and StatUnit component
 import React from "react";
 import { connect } from "react-redux";
 import MultipleChoice from "./MultipleChoice.jsx";

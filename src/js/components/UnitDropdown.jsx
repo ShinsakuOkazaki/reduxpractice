@@ -1,3 +1,5 @@
+//Component for dropdown for Unit choices
+
 import React from 'react';
 import { connect } from 'react-redux';
 import {Dropdown} from 'primereact/dropdown';

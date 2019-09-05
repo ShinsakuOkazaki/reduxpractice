@@ -1,3 +1,4 @@
+// File input component 
 import React from 'react';
 import { connect } from 'react-redux';
 import XLSX from 'xlsx';
