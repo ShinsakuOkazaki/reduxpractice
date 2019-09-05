@@ -2,20 +2,16 @@ import React from 'react';
 import {Dialog} from 'primereact/dialog';
 import {strategyVisible, setPage, editSubmit, goToPage} from "../actions/index";
 import { connect } from "react-redux";
-//import InputName from "./InputName.jsx";
 import VariableDropdown from './VariableDropdown.jsx';
 import {RadioButton} from 'primereact/radiobutton';
 import {Button} from 'primereact/button';
 import {Fieldset} from 'primereact/fieldset';
-
-//import OntologyDropdown from './OntologyDropdown.jsx';
 
 class DefualtStrategy extends React.Component {
     constructor(props) {
         super(props)
         this.onHide = this.onHide.bind(this)
         this.onChangeOther = this.onChangeOther.bind(this)
-        //this.onClick - this.onClick.bind(this)
     }
 
     onHide() {
@@ -26,10 +22,6 @@ class DefualtStrategy extends React.Component {
         this.props.setPage({page_type: e.value})
         this.props.editSubmit({column_name: this.props.current_column})
     }
-    // onClick() {
-    //     this.props.strategyVisible(false)
-    //     this.props.goToPage()
-    // }
     
     render() {
         const {strategy_page, current_column, page_type, submit_column , submit_description} = this.props;

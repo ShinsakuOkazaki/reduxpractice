@@ -12,7 +12,6 @@ class FileInput extends React.Component {
     handleFile(file){
         const reader = new FileReader();
         const rABS = !!reader.readAsBinalyString;
-        //reader.onload contain event handler when readAsBinaryString
         reader.onload = e => {
             const wb = XLSX.read(e.target.result, { type: rABS ? "binary" : "array"});
             const wsname = wb.SheetNames[0];

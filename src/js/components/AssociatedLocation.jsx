@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {addAssociate} from "../actions/index";
 import {MultiSelect} from 'primereact/multiselect';
 
+
 class DefaultLocation extends React.Component {
     constructor(props) {
         super(props)

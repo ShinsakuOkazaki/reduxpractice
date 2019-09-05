@@ -21,7 +21,9 @@ function compareRating(a, b){
 }
 // function to get suggested variable from spine based on variable name of users
 export function getSuggestedVariable(column, spine_variables) {
+	// get variables in spine
 	const spine_columns = spine_variables.map(x => x["column_name"])
+	// sort spine variable based on similarity of string to searching term
 	const suggested_variables = stringSimilarity.findBestMatch(column, spine_columns)["ratings"].sort(compareRating).map(x => x["target"]);
 	return suggested_variables
 }

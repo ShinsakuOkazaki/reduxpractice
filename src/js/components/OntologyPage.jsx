@@ -31,7 +31,6 @@ class DefaultPage extends React.Component {
                     )}
                 </div>
                 <div className="w3-col l3">
-                    {/* <GoToColumn/> */}
                     <VerifyButton/>
                 </div>
             </div>

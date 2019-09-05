@@ -17,7 +17,6 @@ class DefaultMatchedChoice extends React.Component {
     }
     handleBlur() {
         const {multiple, idx} = this.props;
-        const submit_multiple = multiple.map(x => x["submit"]);
         multiple[idx]["submit"] = this.state.inputValue;
         this.props.changeChoice({new_multiple: multiple});
     }
